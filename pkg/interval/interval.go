@@ -52,19 +52,19 @@ func intervalFunc(quality Quality) func(int) Interval {
 		chromatic := diatonicToChromatic(diatonic) + diff
 
 		return Interval{
-			octaves:            int((val - 1) / 7.0),
-			diatonicRemainder:  diatonic,
-			chromaticRemainder: chromatic,
-			quality:            quality,
+			octaves:   int((val - 1) / 7.0),
+			diatonic:  diatonic,
+			chromatic: chromatic,
+			quality:   quality,
 		}
 	}
 }
 
 type Interval struct {
-	octaves            int
-	diatonicRemainder  int
-	chromaticRemainder int
-	quality            Quality
+	octaves   int
+	diatonic  int
+	chromatic int
+	quality   Quality
 }
 
 func (i Interval) Octaves() int {
@@ -72,11 +72,11 @@ func (i Interval) Octaves() int {
 }
 
 func (i Interval) Chroma() int {
-	return i.chromaticRemainder
+	return i.chromatic
 }
 
 func (i Interval) Semitones() int {
-	return i.octaves*12 + i.chromaticRemainder
+	return i.octaves*12 + i.chromatic
 }
 
 func (i Interval) Quality() Quality {
