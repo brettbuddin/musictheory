@@ -55,8 +55,8 @@ func TestIntervals(test *testing.T) {
 		actual := t.typeFunc(t.distance)
 
 		if actual.octaves != t.expectedOctaves ||
-			actual.diatonicRemainder != t.expectedDiatonic ||
-			actual.chromaticRemainder != t.expectedChromatic {
+			actual.diatonic != t.expectedDiatonic ||
+			actual.chromatic != t.expectedChromatic {
 
 			test.Errorf("index=%d actual=%d expected=(octaves=%d diatonic=%d chromatic=%d)",
 				i,
