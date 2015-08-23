@@ -80,7 +80,7 @@ func (i Interval) Diatonic() int {
 	return i.diatonic
 }
 
-func (i Interval) Chroma() int {
+func (i Interval) Chromatic() int {
 	return i.chromatic
 }
 

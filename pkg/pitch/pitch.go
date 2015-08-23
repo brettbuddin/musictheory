@@ -58,7 +58,7 @@ type Pitch struct {
 }
 
 func (p Pitch) Name(s NameStrategy) string {
-	nameIndex := s.GetMappedIndex(p.interval.Chroma())
+	nameIndex := s.GetMappedIndex(p.interval.Chromatic())
 	diff := p.interval.Diff()
 	accIndex := diff + 2
 	diatonic := p.interval.Diatonic()
