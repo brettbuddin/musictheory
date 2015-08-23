@@ -24,5 +24,5 @@ func main() {
 
 Outputs:
 ```
-// G is a perfect fifth above C
+// G0 is a perfect fifth above C0
 ```

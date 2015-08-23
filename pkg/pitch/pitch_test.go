@@ -8,13 +8,13 @@ var sharpNamesTests = []struct {
 	pitch    int
 	expected string
 }{
-	{C, "C#"},
-	{D, "D#"},
-	{E, "F"},
-	{F, "F#"},
-	{G, "G#"},
-	{A, "A#"},
-	{B, "C"},
+	{C, "C#0"},
+	{D, "D#0"},
+	{E, "F0"},
+	{F, "F#0"},
+	{G, "G#0"},
+	{A, "A#0"},
+	{B, "C0"},
 }
 
 func TestSharpPitchNames(test *testing.T) {
@@ -30,13 +30,13 @@ var flatNamesTests = []struct {
 	pitch    int
 	expected string
 }{
-	{C, "B"},
-	{D, "Db"},
-	{E, "Eb"},
-	{F, "E"},
-	{G, "Gb"},
-	{A, "Ab"},
-	{B, "Bb"},
+	{C, "B0"},
+	{D, "Db0"},
+	{E, "Eb0"},
+	{F, "E0"},
+	{G, "Gb0"},
+	{A, "Ab0"},
+	{B, "Bb0"},
 }
 
 func TestFlatPitchNames(test *testing.T) {
@@ -52,13 +52,13 @@ var doubleSharpNamesTests = []struct {
 	pitch    int
 	expected string
 }{
-	{C, "D"},
-	{D, "E"},
-	{E, "F#"},
-	{F, "G"},
-	{G, "A"},
-	{A, "B"},
-	{B, "C#"},
+	{C, "D0"},
+	{D, "E0"},
+	{E, "F#0"},
+	{F, "G0"},
+	{G, "A0"},
+	{A, "B0"},
+	{B, "C#0"},
 }
 
 func TestDoubleSharpPitchNames(test *testing.T) {
@@ -74,13 +74,13 @@ var doubleFlatNamesTests = []struct {
 	pitch    int
 	expected string
 }{
-	{C, "Bb"},
-	{D, "C"},
-	{E, "D"},
-	{F, "Eb"},
-	{G, "F"},
-	{A, "G"},
-	{B, "A"},
+	{C, "Bb0"},
+	{D, "C0"},
+	{E, "D0"},
+	{F, "Eb0"},
+	{G, "F0"},
+	{A, "G0"},
+	{B, "A0"},
 }
 
 func TestDoubleFlatPitchNames(test *testing.T) {

@@ -63,9 +63,9 @@ func (p Pitch) Name(s NameStrategy) string {
 	delta := semitones - interval.DiatonicToChromatic(nameIndex)
 
 	if delta == 0 {
-		return PitchNames[nameIndex]
+		return fmt.Sprintf("%s%d", PitchNames[nameIndex], p.interval.Octaves())
 	}
-	return fmt.Sprintf("%s%s", PitchNames[nameIndex], accidentalName(delta+2))
+	return fmt.Sprintf("%s%s%d", PitchNames[nameIndex], accidentalName(delta+2), p.interval.Octaves())
 }
 
 func (p Pitch) AddInterval(i interval.Interval) Pitch {
