@@ -30,10 +30,12 @@ const (
 )
 
 var (
-	AccidentalNames = [5]string{"bb", "b", "", "#", "x"}
-	PitchNames      = [7]string{"C", "D", "E", "F", "G", "A", "B"}
-	namesForFlats   = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
-	namesForSharps  = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
+	UseFancyAccidentals  = false
+	AccidentalNames      = [5]string{"bb", "b", "", "#", "x"}
+	FancyAccidentalNames = [5]string{"♭♭", "♭", "", "♯", "𝄪"}
+	PitchNames           = [7]string{"C", "D", "E", "F", "G", "A", "B"}
+	namesForFlats        = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
+	namesForSharps       = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
 
 	FlatNames  = NameStrategyFunc(func(i int) int { return namesForFlats[int(mt_math.Mod(float64(i), 12))] })
 	SharpNames = NameStrategyFunc(func(i int) int { return namesForSharps[int(mt_math.Mod(float64(i), 12))] })
@@ -73,5 +75,8 @@ func (p Pitch) AddInterval(i interval.Interval) Pitch {
 }
 
 func accidentalName(i int) string {
+	if UseFancyAccidentals {
+		return FancyAccidentalNames[int(mt_math.Mod(float64(i), float64(len(AccidentalNames))))]
+	}
 	return AccidentalNames[int(mt_math.Mod(float64(i), float64(len(AccidentalNames))))]
 }

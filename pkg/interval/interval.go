@@ -115,6 +115,14 @@ func (i Interval) AddInterval(o Interval) Interval {
 	return Interval{octaves, diatonicRemainder, chromatic}
 }
 
+func (i Interval) Negate() Interval {
+	if i.diatonic == 0 && i.chromatic == 0 {
+		return Interval{-i.octaves, i.diatonic, i.chromatic}
+	}
+
+	return Interval{-(i.octaves + 1), 7 - i.diatonic, 12 - i.chromatic}
+}
+
 type Quality struct {
 	Type, Size int
 }
