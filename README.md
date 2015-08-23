@@ -22,13 +22,15 @@ func main() {
 	fifthBelow := tonic.AddInterval(mi.Perfect(5).Negate())
 	fifthAbove := tonic.AddInterval(mi.Perfect(5))
 
-	fmt.Printf("%s is a perfect fifth below %s\n", fifthBelow.Name(nameFmt), tonic.Name(nameFmt))
-	fmt.Printf("%s is a perfect fifth above %s\n", fifthAbove.Name(nameFmt), tonic.Name(nameFmt))
+	format := "%s is a perfect fifth %s %s, and is %f Hz.\n"
+	fmt.Printf(format, fifthBelow.Name(nameFmt), "below", tonic.Name(nameFmt), fifthBelow.Freq())
+	fmt.Printf(format, fifthAbove.Name(nameFmt), "above", tonic.Name(nameFmt), fifthAbove.Freq())
 }
 ```
 
 Outputs:
 ```
-F-1 is a perfect fifth below C0
-G0 is a perfect fifth above C0
+F3 is a perfect fifth below C4, and is 174.614116 Hz.
+G4 is a perfect fifth above C4, and is 391.995436 Hz.
 ```
+
