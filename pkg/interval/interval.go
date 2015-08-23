@@ -14,7 +14,7 @@ const (
 )
 
 const (
-	Unison int = iota + 1
+	Unison int = iota
 	Second
 	Third
 	Fourth
@@ -43,15 +43,15 @@ var (
 
 func qualityInterval(quality Quality) func(int) Interval {
 	return func(val int) Interval {
-		diatonic := int(mt_math.Mod(float64(val-1), 7))
+		diatonic := int(mt_math.Mod(float64(val), 7))
 		diff := qualityDiff(perfect(diatonic), quality)
-		return New(val, diff)
+		octaves := int(val / 7.0)
+		return New(val, octaves, diff)
 	}
 }
 
-func New(val, offset int) Interval {
-	octaves := int((val - 1) / 7.0)
-	diatonic := int(mt_math.Mod(float64(val-1), 7))
+func New(semitones, octaves, offset int) Interval {
+	diatonic := int(mt_math.Mod(float64(semitones), 7))
 	chromatic := DiatonicToChromatic(diatonic) + offset
 
 	return Interval{octaves, diatonic, chromatic}
@@ -112,11 +112,7 @@ func (i Interval) AddInterval(o Interval) Interval {
 		chromatic = int(mt_math.Mod(float64(chromatic), 12.0))
 	}
 
-	return Interval{
-		octaves:   octaves,
-		diatonic:  diatonicRemainder,
-		chromatic: chromatic,
-	}
+	return Interval{octaves, diatonicRemainder, chromatic}
 }
 
 type Quality struct {
