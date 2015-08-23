@@ -4,7 +4,7 @@
 
 Explorations in music theory. Consider this a toy.
 
-### Example
+## Example
 
 ```go
 package main
