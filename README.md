@@ -15,14 +15,15 @@ import (
 	mp "github.com/brettbuddin/mt/pkg/pitch"
 )
 
+var nameFmt = mp.SharpNames
+
 func main() {
 	tonic := mp.New(mp.C, 0, mp.Natural)
 	fifthBelow := tonic.AddInterval(mi.Perfect(5).Negate())
 	fifthAbove := tonic.AddInterval(mi.Perfect(5))
-	names := mp.SharpNames
 
-	fmt.Printf("%s is a perfect fifth below %s\n", fifthBelow.Name(names), tonic.Name(names))
-	fmt.Printf("%s is a perfect fifth above %s\n", fifthAbove.Name(names), tonic.Name(names))
+	fmt.Printf("%s is a perfect fifth below %s\n", fifthBelow.Name(nameFmt), tonic.Name(nameFmt))
+	fmt.Printf("%s is a perfect fifth above %s\n", fifthAbove.Name(nameFmt), tonic.Name(nameFmt))
 }
 ```
 
