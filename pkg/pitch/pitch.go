@@ -59,10 +59,11 @@ type Pitch struct {
 
 func (p Pitch) Name(s NameStrategy) string {
 	nameIndex := s.GetMappedIndex(p.interval.Chroma())
-	accIndex := p.interval.Diff() + 2
-
 	diff := p.interval.Diff()
+	accIndex := diff + 2
 	diatonic := p.interval.Diatonic()
+
+	// TODO: Find a better way to detect natural semitones.
 
 	if (diatonic == 0 || diatonic == 3) && diff == -1 {
 		return PitchNames[nameIndex]
