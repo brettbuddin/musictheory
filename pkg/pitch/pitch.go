@@ -56,22 +56,22 @@ func New(diatonic, octaves, accidental int) Pitch {
 }
 
 type Pitch struct {
-	interval interval.Interval
+	interval.Interval
 }
 
 func (p Pitch) Name(s NameStrategy) string {
-	semitones := int(mt_math.Mod(float64(p.interval.Semitones()), 12.0))
+	semitones := int(mt_math.Mod(float64(p.Semitones()), 12.0))
 	nameIndex := s.GetMappedIndex(semitones)
 	delta := semitones - interval.DiatonicToChromatic(nameIndex)
 
 	if delta == 0 {
-		return fmt.Sprintf("%s%d", PitchNames[nameIndex], p.interval.Octaves())
+		return fmt.Sprintf("%s%d", PitchNames[nameIndex], p.Octaves())
 	}
-	return fmt.Sprintf("%s%s%d", PitchNames[nameIndex], accidentalName(delta+2), p.interval.Octaves())
+	return fmt.Sprintf("%s%s%d", PitchNames[nameIndex], accidentalName(delta+2), p.Octaves())
 }
 
 func (p Pitch) AddInterval(i interval.Interval) Pitch {
-	return Pitch{p.interval.AddInterval(i)}
+	return Pitch{p.Interval.AddInterval(i)}
 }
 
 func accidentalName(i int) string {
