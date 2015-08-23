@@ -71,12 +71,11 @@ func TestIntervals(test *testing.T) {
 var addTests = []struct {
 	initial, add, expected Interval
 }{
-	{New(0, 0, 0), New(0, 0, 0), New(0, 0, 0)},
-	{New(0, 0, 0), New(1, 0, 0), New(1, 0, 0)},
-	{New(0, 0, 0), New(0, 1, 0), New(0, 1, 0)},
-	{New(0, 0, 0), New(0, 0, 1), New(0, 0, 1)},
-	{New(0, 0, 0), New(1, 0, 1), New(1, 0, 1)},
-	{New(2, 0, 0), New(3, 0, 1), New(5, 0, 1)},
+	{New(1, 0, 0), New(1, 0, 0), New(1, 0, 0)},
+	{New(1, 0, 0), New(1, 0, 0), New(1, 0, 0)},
+	{New(1, 0, 0), New(0, 1, 0), New(0, 1, 0)},
+	{New(1, 0, 0), New(0, 0, 1), New(0, 0, 1)},
+	{New(1, 0, 0), New(1, 0, 1), New(1, 0, 1)},
 }
 
 func TestAddInterval(test *testing.T) {

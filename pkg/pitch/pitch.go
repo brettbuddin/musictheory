@@ -20,7 +20,7 @@ const (
 )
 
 const (
-	C int = iota
+	C int = iota + 1
 	D
 	E
 	F
@@ -66,6 +66,10 @@ func (p Pitch) Name(s NameStrategy) string {
 		return PitchNames[nameIndex]
 	}
 	return fmt.Sprintf("%s%s", PitchNames[nameIndex], accidentalName(delta+2))
+}
+
+func (p Pitch) AddInterval(i interval.Interval) Pitch {
+	return Pitch{p.interval.AddInterval(i)}
 }
 
 func accidentalName(i int) string {
