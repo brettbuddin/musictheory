@@ -1,4 +1,4 @@
-# mt
+# mt (music theory)
 
 [![Build Status](https://travis-ci.org/brettbuddin/mt.svg?branch=master)](https://travis-ci.org/brettbuddin/mt)
 
