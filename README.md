@@ -46,3 +46,11 @@ F3 is a perfect fifth below C4, and is 174.614116 Hz (MIDI tone 53).
 G4 is a perfect fifth above C4, and is 391.995436 Hz (MIDI tone 67).
 ```
 
+## TODO
+
+- Document all of this
+- Chords
+- Scales
+- Inversions
+- ...
+- Write a tool or two that uses this stuff...
