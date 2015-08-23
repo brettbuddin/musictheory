@@ -17,14 +17,17 @@ import (
 
 func main() {
 	tonic := mp.New(mp.C, 0, mp.Natural)
-	perfectFifth := tonic.AddInterval(mi.Perfect(5))
+	fifthBelow := tonic.AddInterval(mi.Perfect(5).Negate())
+	fifthAbove := tonic.AddInterval(mi.Perfect(5))
 	names := mp.SharpNames
 
-	fmt.Printf("%s is a perfect fifth above %s\n", perfectFifth.Name(names), tonic.Name(names))
+	fmt.Printf("%s is a perfect fifth below %s\n", fifthBelow.Name(names), tonic.Name(names))
+	fmt.Printf("%s is a perfect fifth above %s\n", fifthAbove.Name(names), tonic.Name(names))
 }
 ```
 
 Outputs:
 ```
 G0 is a perfect fifth above C0
+F-1 is a perfect fifth above C0
 ```
