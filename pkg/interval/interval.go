@@ -140,7 +140,7 @@ func (q Quality) Invert() Quality {
 	case DiminishedT:
 		return Quality{AugmentedT, q.Size}
 	default:
-		panic(fmt.Sprintf("invalid type: %s", q.Type))
+		panic(fmt.Sprintf("invalid type: %d", q.Type))
 	}
 }
 
