@@ -88,6 +88,10 @@ func (p Pitch) Freq() float64 {
 	return concertFrequency * math.Pow(semitone, float64(p.Semitones()-middleA.Semitones()))
 }
 
+func (p Pitch) MIDI() int {
+	return p.Semitones() + 12
+}
+
 func accidentalName(i int) string {
 	if UseFancyAccidentals {
 		return fancyAccidentalNames[int(mt_math.Mod(float64(i), float64(len(accidentalNames))))]
