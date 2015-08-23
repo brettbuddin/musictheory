@@ -50,8 +50,8 @@ func qualityInterval(quality Quality) func(int) Interval {
 	}
 }
 
-func New(semitones, octaves, offset int) Interval {
-	diatonic := int(mt_math.Mod(float64(semitones-1), 7))
+func New(diatonic, octaves, offset int) Interval {
+	diatonic = int(mt_math.Mod(float64(diatonic-1), 7))
 	chromatic := DiatonicToChromatic(diatonic) + offset
 
 	return Interval{octaves, diatonic, chromatic}

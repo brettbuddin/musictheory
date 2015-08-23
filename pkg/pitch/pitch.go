@@ -49,8 +49,8 @@ func (f NameStrategyFunc) GetMappedIndex(i int) int {
 	return f(i)
 }
 
-func New(semitone, octaves, accidental int) Pitch {
-	return Pitch{interval.New(semitone, octaves, accidental)}
+func New(diatonic, octaves, accidental int) Pitch {
+	return Pitch{interval.New(diatonic, octaves, accidental)}
 }
 
 type Pitch struct {
