@@ -34,7 +34,7 @@ var intervalTests = []struct {
 	{Augmented, Fourth, 0, 3, 6},
 	{Augmented, Fifth, 0, 4, 8},
 	{Augmented, Sixth, 0, 5, 10},
-	{Augmented, Seventh, 0, 6, 12}, // TODO: Look into this chroma
+	{Augmented, Seventh, 0, 6, 12},
 	{Augmented, Octave, 1, 0, 1},
 
 	{Diminished, Second, 0, 1, 0},

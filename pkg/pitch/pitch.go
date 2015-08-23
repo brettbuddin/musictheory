@@ -20,7 +20,7 @@ const (
 )
 
 const (
-	C int = iota + 1
+	C int = iota
 	D
 	E
 	F
@@ -50,7 +50,7 @@ func (f NameStrategyFunc) GetMappedIndex(i int) int {
 }
 
 func New(semitone int, accidental int) Pitch {
-	return Pitch{interval.New(semitone, accidental)}
+	return Pitch{interval.New(semitone+1, accidental)}
 }
 
 type Pitch struct {
@@ -58,20 +58,16 @@ type Pitch struct {
 }
 
 func (p Pitch) Name(s NameStrategy) string {
-	nameIndex := s.GetMappedIndex(p.interval.Chromatic())
-	diff := p.interval.Diff()
-	accIndex := diff + 2
-	diatonic := p.interval.Diatonic()
+	semitones := int(mt_math.Mod(float64(p.interval.Semitones()), 12.0))
+	nameIndex := s.GetMappedIndex(semitones)
+	delta := semitones - interval.DiatonicToChromatic(nameIndex)
 
-	// TODO: Find a better way to detect natural semitones.
-
-	if (diatonic == 0 || diatonic == 3) && diff == -1 {
+	if delta == 0 {
 		return PitchNames[nameIndex]
 	}
+	return fmt.Sprintf("%s%s", PitchNames[nameIndex], accidentalName(delta+2))
+}
 
-	if (diatonic == 2 || diatonic == 6) && diff == 1 {
-		return PitchNames[nameIndex]
-	}
-
-	return fmt.Sprintf("%s%s", PitchNames[nameIndex], AccidentalNames[accIndex])
+func accidentalName(i int) string {
+	return AccidentalNames[int(mt_math.Mod(float64(i), float64(len(AccidentalNames))))]
 }
