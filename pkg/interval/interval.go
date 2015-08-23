@@ -2,7 +2,7 @@ package interval
 
 import (
 	"fmt"
-	"math"
+	mt_math "github.com/brettbuddin/mt/pkg/math"
 )
 
 const (
@@ -32,43 +32,52 @@ const (
 )
 
 var (
-	Perfect          = intervalFunc(Quality{PerfectT, 0})
-	Major            = intervalFunc(Quality{MajorT, 0})
-	Minor            = intervalFunc(Quality{MinorT, 0})
-	Augmented        = intervalFunc(Quality{AugmentedT, 1})
-	DoublyAugmented  = intervalFunc(Quality{AugmentedT, 2})
-	Diminished       = intervalFunc(Quality{DiminishedT, 1})
-	DoublyDiminished = intervalFunc(Quality{DiminishedT, 2})
+	Perfect          = buildFromQuality(Quality{PerfectT, 0})
+	Major            = buildFromQuality(Quality{MajorT, 0})
+	Minor            = buildFromQuality(Quality{MinorT, 0})
+	Augmented        = buildFromQuality(Quality{AugmentedT, 1})
+	DoublyAugmented  = buildFromQuality(Quality{AugmentedT, 2})
+	Diminished       = buildFromQuality(Quality{DiminishedT, 1})
+	DoublyDiminished = buildFromQuality(Quality{DiminishedT, 2})
 )
 
-func intervalFunc(quality Quality) func(int) Interval {
+func buildFromQuality(quality Quality) func(int) Interval {
 	return func(val int) Interval {
-		diatonic := int(math.Mod(float64(val-1), 7.0))
-		if diatonic < 0 {
-			diatonic += 7
-		}
-
+		diatonic := int(mt_math.Mod(float64(val-1), 7))
 		diff := qualityToDiff(perfect(diatonic), quality)
-		chromatic := diatonicToChromatic(diatonic) + diff
-
-		return Interval{
-			octaves:   int((val - 1) / 7.0),
-			diatonic:  diatonic,
-			chromatic: chromatic,
-			quality:   quality,
-		}
+		return build(val, diff)
 	}
+}
+
+func build(val, offset int) Interval {
+	diatonic := int(mt_math.Mod(float64(val-1), 7))
+	return Interval{
+		octaves:   int((val - 1) / 7.0),
+		diatonic:  diatonic,
+		chromatic: diatonicToChromatic(diatonic) + offset,
+	}
+}
+
+func New(val, offset int) Interval {
+	return build(val, offset)
 }
 
 type Interval struct {
 	octaves   int
 	diatonic  int
 	chromatic int
-	quality   Quality
 }
 
 func (i Interval) Octaves() int {
 	return i.octaves
+}
+
+func (i Interval) Diff() int {
+	return i.chromatic - diatonicToChromatic(i.diatonic)
+}
+
+func (i Interval) Diatonic() int {
+	return i.diatonic
 }
 
 func (i Interval) Chroma() int {
@@ -77,10 +86,6 @@ func (i Interval) Chroma() int {
 
 func (i Interval) Semitones() int {
 	return i.octaves*12 + i.chromatic
-}
-
-func (i Interval) Quality() Quality {
-	return i.quality
 }
 
 type Quality struct {
