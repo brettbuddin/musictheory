@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/brettbuddin/mt.svg?branch=master)](https://travis-ci.org/brettbuddin/mt)
 
-Explorations in music theory.
+Explorations in music theory. Consider this a toy.
 
 ```go
 package main
