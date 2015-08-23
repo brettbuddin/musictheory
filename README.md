@@ -49,8 +49,11 @@ G4 is a perfect fifth above C4, and is 391.995436 Hz (MIDI tone 67).
 ## TODO
 
 - Document all of this
+- Full test coverage
+- Pitch Vectors
 - Chords
-- Scales
+- Scales (modal and special)
 - Inversions
+- Scientific pitch notation parsing
 - ...
 - Write a tool or two that uses this stuff...
