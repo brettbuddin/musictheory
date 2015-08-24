@@ -86,10 +86,6 @@ func TestIntervalQuality(test *testing.T) {
 		if !actual.Eq(t.expected) {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
-
-		if !t.input.HasQualityType(t.expected.Type) {
-			test.Errorf("index=%d actual=%d expected=%d", i, actual.Type, t.expected.Type)
-		}
 	}
 }
 
@@ -117,7 +113,7 @@ func TestTranspose(test *testing.T) {
 	}
 }
 
-var diatonicAndChromaticDiffTests = []struct {
+var chromaticDiffTests = []struct {
 	input    Interval
 	expected int
 }{
@@ -128,8 +124,8 @@ var diatonicAndChromaticDiffTests = []struct {
 }
 
 func TestDiatonicAndChromaticDiff(test *testing.T) {
-	for i, t := range diatonicAndChromaticDiffTests {
-		actual := t.input.Diff()
+	for i, t := range chromaticDiffTests {
+		actual := t.input.ChromaticDiff()
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}

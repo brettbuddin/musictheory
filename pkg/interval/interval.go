@@ -5,14 +5,16 @@ import (
 	mt_math "github.com/brettbuddin/mt/pkg/math"
 )
 
+// Quality types
 const (
-	PerfectT int = iota
+	PerfectT QualityType = iota
 	MajorT
 	MinorT
 	AugmentedT
 	DiminishedT
 )
 
+// Intervals
 var (
 	Perfect          = qualityInterval(Quality{PerfectT, 0})
 	Major            = qualityInterval(Quality{MajorT, 0})
@@ -25,21 +27,23 @@ var (
 )
 
 func qualityInterval(quality Quality) func(int) Interval {
-	return func(val int) Interval {
-		diatonic := int(mt_math.Mod(float64(val-1), 7))
-		diff := qualityDiff(perfect(diatonic), quality)
-		octaves := int((val - 1) / 7.0)
-		return New(val, octaves, diff)
+	return func(step int) Interval {
+		diatonic := normalizeDiatonic(step - 1)
+		diff := qualityDiff(quality, canBePerfect(diatonic))
+		octaves := diatonicOctaves(step - 1)
+		return New(step, octaves, diff)
 	}
 }
 
-func New(diatonic, octaves, offset int) Interval {
-	diatonic = int(mt_math.Mod(float64(diatonic-1), 7))
+// New Interval
+func New(step, octaves, offset int) Interval {
+	diatonic := normalizeDiatonic(step - 1)
 	chromatic := DiatonicToChromatic(diatonic) + offset
 
 	return Interval{octaves, diatonic, chromatic}
 }
 
+// Interval represents an interval in 12-tone equal temperament
 type Interval struct {
 	octaves   int
 	diatonic  int
@@ -50,28 +54,34 @@ func (i Interval) String() string {
 	return fmt.Sprintf("(octaves: %d, diatonic: %d, chromatic: %d)", i.octaves, i.diatonic, i.chromatic)
 }
 
+// Octaves returns the octave component
 func (i Interval) Octaves() int {
 	return i.octaves
 }
 
-func (i Interval) Diff() int {
+// Diff returns the difference between the chromatic component and the chromatized diatonic
+func (i Interval) ChromaticDiff() int {
 	return i.chromatic - DiatonicToChromatic(i.diatonic)
 }
 
+// Diatonic returns the diatonic component
 func (i Interval) Diatonic() int {
 	return i.diatonic
 }
 
+// Chromatic returns the chromatic component
 func (i Interval) Chromatic() int {
 	return i.chromatic
 }
 
+// Semitones returns the total number of semitones that make up the interval
 func (i Interval) Semitones() int {
 	return i.octaves*12 + i.chromatic
 }
 
+// Quality returns the Quality
 func (i Interval) Quality() Quality {
-	quality := diffQuality(perfect(i.Diatonic()), i.Chromatic()-DiatonicToChromatic(i.Diatonic()))
+	quality := diffQuality(i.Chromatic()-DiatonicToChromatic(i.Diatonic()), canBePerfect(i.Diatonic()))
 
 	if i.Octaves() < 0 {
 		return quality.Invert()
@@ -80,34 +90,54 @@ func (i Interval) Quality() Quality {
 	return quality
 }
 
-func (i Interval) HasQualityType(t int) bool {
-	return i.Quality().Type == t
-}
-
+// Transpose returns a new Interval that has been transposed by the given Interval
 func (i Interval) Transpose(o Interval) Interval {
-	diatonics := i.Diatonic() + o.Diatonic()
-	diatonicOctaves := diatonics / 7.0
-	diatonicRemainder := int(mt_math.Mod(float64(diatonics), 7.0))
+	diatonic := i.Diatonic() + o.Diatonic()
+	diatonicOctaves := diatonicOctaves(diatonic)
+	diatonicRemainder := normalizeDiatonic(diatonic)
 
 	octaves := i.Octaves() + o.Octaves() + diatonicOctaves
-	chromatic := i.Chromatic() + o.Chromatic()
-	chromatic = int(mt_math.Mod(float64(chromatic), 12.0))
+	chromatic := normalizeChromatic(i.Chromatic() + o.Chromatic())
 
 	return Interval{octaves, diatonicRemainder, chromatic}
 }
 
+// Negate returns a new, negated Interval
 func (i Interval) Negate() Interval {
 	if i.diatonic == 0 && i.chromatic == 0 {
 		return Interval{-i.octaves, i.diatonic, i.chromatic}
 	}
 
-	return Interval{-(i.octaves + 1), 7 - i.diatonic, 12 - i.chromatic}
+	return Interval{-(i.octaves + 1), inverseDiatonic(i.diatonic), inverseChromatic(i.chromatic)}
 }
 
+// QualityType represents the type a Quality can take
+type QualityType int
+
+func (q QualityType) String() string {
+	switch q {
+	case PerfectT:
+		return "perfect"
+	case MajorT:
+		return "major"
+	case MinorT:
+		return "minor"
+	case AugmentedT:
+		return "augmented"
+	case DiminishedT:
+		return "diminished"
+	default:
+		return "unknown"
+	}
+}
+
+// Quality describes the quality of an interval
 type Quality struct {
-	Type, Size int
+	Type QualityType
+	Size int
 }
 
+// Invert returns a new, inverted Quality
 func (q Quality) Invert() Quality {
 	switch q.Type {
 	case PerfectT:
@@ -125,10 +155,12 @@ func (q Quality) Invert() Quality {
 	}
 }
 
+// Eq checks two Qualities for equality
 func (q Quality) Eq(o Quality) bool {
 	return q.Type == o.Type && q.Size == o.Size
 }
 
+// DiatonicToChromatic converts a diatonic value to the chromatic equivalent
 func DiatonicToChromatic(interval int) int {
 	if interval >= len(diatonicToChromaticLookup) {
 		panic(fmt.Sprintf("interval out of range: %d", interval))
@@ -139,7 +171,7 @@ func DiatonicToChromatic(interval int) int {
 
 var diatonicToChromaticLookup = []int{0, 2, 4, 5, 7, 9, 11}
 
-func qualityDiff(perfect bool, q Quality) int {
+func qualityDiff(q Quality, perfect bool) int {
 	if q.Type == PerfectT || q.Type == MajorT {
 		return 0
 	} else if q.Type == MinorT {
@@ -149,14 +181,13 @@ func qualityDiff(perfect bool, q Quality) int {
 	} else if q.Type == DiminishedT {
 		if perfect {
 			return -q.Size
-		} else {
-			return -(q.Size + 1)
 		}
+		return -(q.Size + 1)
 	}
 	panic("invalid quality")
 }
 
-func diffQuality(perfect bool, diff int) Quality {
+func diffQuality(diff int, perfect bool) Quality {
 	if perfect {
 		if diff == 0 {
 			return Quality{PerfectT, 0}
@@ -178,6 +209,26 @@ func diffQuality(perfect bool, diff int) Quality {
 	return Quality{DiminishedT, -(diff + 1)}
 }
 
-func perfect(interval int) bool {
+func canBePerfect(interval int) bool {
 	return interval == 0 || interval == 3 || interval == 4
+}
+
+func normalizeChromatic(v int) int {
+	return int(mt_math.Mod(float64(v), 12))
+}
+
+func normalizeDiatonic(v int) int {
+	return int(mt_math.Mod(float64(v), 7))
+}
+
+func diatonicOctaves(v int) int {
+	return v / 7
+}
+
+func inverseChromatic(v int) int {
+	return 12 - v
+}
+
+func inverseDiatonic(v int) int {
+	return 7 - v
 }
