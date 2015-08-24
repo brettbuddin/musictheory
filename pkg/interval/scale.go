@@ -1,4 +1,4 @@
-package pitch
+package interval
 
 // Scales
 var (
