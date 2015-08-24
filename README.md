@@ -16,35 +16,26 @@ import (
 	mp "github.com/brettbuddin/mt/pkg/pitch"
 )
 
-var nameFmt = mp.SharpNames
-
 func main() {
-	tonic := mp.New(mp.C, 0, mp.Natural)
-	fifthBelow := tonic.Transpose(mi.Perfect(5).Negate())
-	fifthAbove := tonic.Transpose(mi.Perfect(5))
+	origin := mp.New(mp.C, 0, mp.Natural)
 
-	format := "%s is a perfect fifth %s %s, and is %f Hz (MIDI tone %d).\n"
+	fmt.Printf("Origin: %s (%f Hz / MIDI %d)\n", 
+            origin.Name(mp.SharpNames), 
+            origin.Freq(), 
+            origin.MIDI())
 
-	fmt.Printf(format,
-		fifthBelow.Name(nameFmt),
-		"below",
-		tonic.Name(nameFmt),
-		fifthBelow.Freq(),
-		fifthBelow.MIDI())
-
-	fmt.Printf(format,
-		fifthAbove.Name(nameFmt),
-		"above",
-		tonic.Name(nameFmt),
-		fifthAbove.Freq(),
-		fifthAbove.MIDI())
+	fmt.Println("Perfect fifth below:", origin.Transpose(mi.Perfect(5).Negate()).Name(mp.SharpNames))
+	fmt.Println("Perfect fifth above:", origin.Transpose(mi.Perfect(5)).Name(mp.SharpNames))
+	fmt.Println("Augmented fourth above:", origin.Transpose(mi.Augmented(4)).Name(mp.SharpNames))
 }
 ```
 
 Outputs:
 ```
-F3 is a perfect fifth below C4, and is 174.614116 Hz (MIDI tone 53).
-G4 is a perfect fifth above C4, and is 391.995436 Hz (MIDI tone 67).
+Origin: C4 (261.625565 Hz / MIDI 60)
+Perfect fifth below: F3
+Perfect fifth above: G4
+Augmented fourth above: F#4
 ```
 
 ## TODO
