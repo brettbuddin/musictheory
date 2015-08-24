@@ -24,9 +24,12 @@ func main() {
             origin.Freq(), 
             origin.MIDI())
 
-	fmt.Println("Perfect fifth below:", origin.Transpose(mi.Perfect(5).Negate()).Name(mp.SharpNames))
-	fmt.Println("Perfect fifth above:", origin.Transpose(mi.Perfect(5)).Name(mp.SharpNames))
-	fmt.Println("Augmented fourth above:", origin.Transpose(mi.Augmented(4)).Name(mp.SharpNames))
+    P5 := mi.Perfect(5)
+    A4 := mi.Augmented(4)
+
+	fmt.Println("Perfect fifth below:", origin.Transpose(P5.Negate()).Name(mp.SharpNames))
+	fmt.Println("Perfect fifth above:", origin.Transpose(P5).Name(mp.SharpNames))
+	fmt.Println("Augmented fourth above:", origin.Transpose(A4).Name(mp.SharpNames))
 }
 ```
 
