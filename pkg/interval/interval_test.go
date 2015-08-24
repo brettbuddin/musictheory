@@ -93,8 +93,8 @@ func TestIntervalQuality(test *testing.T) {
 	}
 }
 
-var addTests = []struct {
-	initial, add, expected Interval
+var transposeTests = []struct {
+	initial, interval, expected Interval
 }{
 	{Interval{0, 0, 0}, Major(2), Interval{0, 1, 2}},
 	{Interval{0, 0, 0}, Major(3), Interval{0, 2, 4}},
@@ -105,9 +105,9 @@ var addTests = []struct {
 	{Interval{0, 6, 11}, Diminished(5).Negate(), Interval{0, 2, 5}},
 }
 
-func TestAddInterval(test *testing.T) {
-	for i, t := range addTests {
-		actual := t.initial.AddInterval(t.add)
+func TestTranspose(test *testing.T) {
+	for i, t := range transposeTests {
+		actual := t.initial.Transpose(t.interval)
 		if actual.Octaves() != t.expected.Octaves() ||
 			actual.Diatonic() != t.expected.Diatonic() ||
 			actual.Chromatic() != t.expected.Chromatic() {

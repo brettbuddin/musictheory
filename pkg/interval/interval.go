@@ -84,7 +84,7 @@ func (i Interval) HasQualityType(t int) bool {
 	return i.Quality().Type == t
 }
 
-func (i Interval) AddInterval(o Interval) Interval {
+func (i Interval) Transpose(o Interval) Interval {
 	diatonics := i.Diatonic() + o.Diatonic()
 	diatonicOctaves := diatonics / 7.0
 	diatonicRemainder := int(mt_math.Mod(float64(diatonics), 7.0))

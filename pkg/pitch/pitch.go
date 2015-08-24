@@ -76,8 +76,8 @@ func (p Pitch) Name(s NameStrategy) string {
 	return fmt.Sprintf("%s%s%d", pitchNames[nameIndex], accidentalName(delta+2), p.Octaves())
 }
 
-func (p Pitch) AddInterval(i interval.Interval) Pitch {
-	return Pitch{p.Interval.AddInterval(i)}
+func (p Pitch) Transpose(i interval.Interval) Pitch {
+	return Pitch{p.Interval.Transpose(i)}
 }
 
 func (p Pitch) Freq() float64 {
