@@ -14,25 +14,45 @@ const (
 	DiminishedT
 )
 
-// Intervals
-var (
-	Perfect          = qualityInterval(Quality{PerfectT, 0})
-	Major            = qualityInterval(Quality{MajorT, 0})
-	Minor            = qualityInterval(Quality{MinorT, 0})
-	Augmented        = qualityInterval(Quality{AugmentedT, 1})
-	DoublyAugmented  = qualityInterval(Quality{AugmentedT, 2})
-	Diminished       = qualityInterval(Quality{DiminishedT, 1})
-	DoublyDiminished = qualityInterval(Quality{DiminishedT, 2})
-	Octave           = Interval{1, 0, 0}
-)
+// Specific intervals
 
-func qualityInterval(quality Quality) func(int) Interval {
-	return func(step int) Interval {
-		diatonic := normalizeDiatonic(step - 1)
-		diff := qualityDiff(quality, canBePerfect(diatonic))
-		octaves := diatonicOctaves(step - 1)
-		return New(step, octaves, diff)
-	}
+var Octave = Interval{1, 0, 0}
+
+type IntervalFunc func(int) Interval
+
+func Perfect(step int) Interval {
+	return qualityInterval(step, Quality{PerfectT, 0})
+}
+
+func Major(step int) Interval {
+	return qualityInterval(step, Quality{MajorT, 0})
+}
+
+func Minor(step int) Interval {
+	return qualityInterval(step, Quality{MinorT, 0})
+}
+
+func Augmented(step int) Interval {
+	return qualityInterval(step, Quality{AugmentedT, 1})
+}
+
+func DoublyAugmented(step int) Interval {
+	return qualityInterval(step, Quality{AugmentedT, 2})
+}
+
+func Diminished(step int) Interval {
+	return qualityInterval(step, Quality{DiminishedT, 1})
+}
+
+func DoublyDiminished(step int) Interval {
+	return qualityInterval(step, Quality{DiminishedT, 2})
+}
+
+func qualityInterval(step int, quality Quality) Interval {
+	diatonic := normalizeDiatonic(step - 1)
+	diff := qualityDiff(quality, canBePerfect(diatonic))
+	octaves := diatonicOctaves(step - 1)
+	return New(step, octaves, diff)
 }
 
 // New Interval

@@ -5,7 +5,7 @@ import (
 )
 
 var intervalTests = []struct {
-	typeFunc          func(int) Interval
+	typeFunc          IntervalFunc
 	step              int
 	expectedOctaves   int
 	expectedDiatonic  int
