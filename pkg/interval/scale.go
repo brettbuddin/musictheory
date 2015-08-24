@@ -11,7 +11,7 @@ var (
 	AeolianScale,
 	LydianScale,
 	MixolydianScale,
-	LocrianScale []Interval
+	LocrianScale Scale
 )
 
 func init() {
@@ -47,3 +47,5 @@ func init() {
 
 	LocrianScale = []Interval{P1, m2, m3, P4, d5, m6, m7}
 }
+
+type Scale []Interval
