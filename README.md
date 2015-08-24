@@ -48,6 +48,7 @@ G4 is a perfect fifth above C4, and is 391.995436 Hz (MIDI tone 67).
 
 ## TODO
 
+- Squash bugs
 - Document all of this
 - Full test coverage
 - Pitch Vectors
