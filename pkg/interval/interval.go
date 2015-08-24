@@ -13,24 +13,6 @@ const (
 	DiminishedT
 )
 
-const (
-	Unison int = iota + 1
-	Second
-	Third
-	Fourth
-	Fifth
-	Sixth
-	Seventh
-	Octave
-	Ninth
-	Tenth
-	Eleventh
-	Twelfth
-	Thirteenth
-	Fourteenth
-	Fiftheenth
-)
-
 var (
 	Perfect          = qualityInterval(Quality{PerfectT, 0})
 	Major            = qualityInterval(Quality{MajorT, 0})
@@ -39,6 +21,7 @@ var (
 	DoublyAugmented  = qualityInterval(Quality{AugmentedT, 2})
 	Diminished       = qualityInterval(Quality{DiminishedT, 1})
 	DoublyDiminished = qualityInterval(Quality{DiminishedT, 2})
+	Octave           = Interval{1, 0, 0}
 )
 
 func qualityInterval(quality Quality) func(int) Interval {
@@ -108,9 +91,7 @@ func (i Interval) AddInterval(o Interval) Interval {
 
 	octaves := i.Octaves() + o.Octaves() + diatonicOctaves
 	chromatic := i.Chromatic() + o.Chromatic()
-	if diatonicOctaves > 0 {
-		chromatic = int(mt_math.Mod(float64(chromatic), 12.0))
-	}
+	chromatic = int(mt_math.Mod(float64(chromatic), 12.0))
 
 	return Interval{octaves, diatonicRemainder, chromatic}
 }
@@ -142,6 +123,10 @@ func (q Quality) Invert() Quality {
 	default:
 		panic(fmt.Sprintf("invalid type: %d", q.Type))
 	}
+}
+
+func (q Quality) Eq(o Quality) bool {
+	return q.Type == o.Type && q.Size == o.Size
 }
 
 func DiatonicToChromatic(interval int) int {
