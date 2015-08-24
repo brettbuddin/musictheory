@@ -9,10 +9,6 @@ import (
 
 const (
 	concertFrequency = 440.0
-	Semitone         = 1
-	Tone             = 2
-	Ditone           = 3
-	Tritone          = 6
 
 	DoubleFlat  = -2
 	Flat        = -1
