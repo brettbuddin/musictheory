@@ -104,7 +104,7 @@ func (p Pitch) Freq() float64 {
 
 // MIDI returns the MIDI note number of the pitch
 func (p Pitch) MIDI() int {
-	return p.Semitones() + 12
+	return p.Semitones() + 24
 }
 
 func accidentalName(i int) string {

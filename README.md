@@ -32,7 +32,7 @@ func main() {
 
 Outputs:
 ```
-Origin: C4 (261.625565 Hz / MIDI 60)
+Origin: C4 (261.625565 Hz / MIDI 72)
 Perfect fifth below: F3
 Perfect fifth above: G4
 Augmented fourth above: F#4
