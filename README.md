@@ -1,6 +1,7 @@
 # mt (music theory)
 
 [![Build Status](https://travis-ci.org/brettbuddin/mt.svg?branch=master)](https://travis-ci.org/brettbuddin/mt)
+[![GoDoc](https://godoc.org/github.com/brettbuddin/mt?status.svg)](https://godoc.org/github.com/brettbuddin/mt)
 
 Explorations in music theory. Consider this a toy.
 
