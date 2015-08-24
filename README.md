@@ -20,8 +20,8 @@ var nameFmt = mp.SharpNames
 
 func main() {
 	tonic := mp.New(mp.C, 0, mp.Natural)
-	fifthBelow := tonic.AddInterval(mi.Perfect(5).Negate())
-	fifthAbove := tonic.AddInterval(mi.Perfect(5))
+	fifthBelow := tonic.Transpose(mi.Perfect(5).Negate())
+	fifthAbove := tonic.Transpose(mi.Perfect(5))
 
 	format := "%s is a perfect fifth %s %s, and is %f Hz (MIDI tone %d).\n"
 
