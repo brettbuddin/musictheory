@@ -36,6 +36,8 @@ func main() {
 }
 ```
 
+楽します！
+
 ## TODO
 
 - Chords
