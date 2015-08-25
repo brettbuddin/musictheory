@@ -1,8 +1,7 @@
-package pitch
+package mt
 
 import (
 	"fmt"
-	"github.com/brettbuddin/mt/pkg/interval"
 	mt_math "github.com/brettbuddin/mt/pkg/math"
 	"math"
 )
@@ -39,17 +38,17 @@ var (
 	namesForFlats        = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
 	namesForSharps       = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
 	semitone             = math.Pow(2, 1.0/12.0)
-	middleA              = NewAbsolute(A, MiddleOctave, Natural)
+	middleA              = NewPitch(A, 0, Natural)
 )
 
 // FlatNames maps an accidental to a correspending diatonic as flats
 func FlatNames(i int) int {
-	return namesForFlats[int(mt_math.Mod(float64(i), 12))]
+	return namesForFlats[normalizeChromatic(i)]
 }
 
 // SharpNames maps an accidental to a correspending diatonic as sharps
 func SharpNames(i int) int {
-	return namesForSharps[int(mt_math.Mod(float64(i), 12))]
+	return namesForSharps[normalizeChromatic(i)]
 }
 
 type nameStrategy interface {
@@ -62,19 +61,14 @@ func (f nameStrategyFunc) GetMappedIndex(i int) int {
 	return f(i)
 }
 
-// New builds a new Pitch at an octave relative to MiddleOctave
-func New(diatonic, octaves, accidental int) Pitch {
-	return Pitch{interval.New(diatonic, MiddleOctave+octaves, accidental)}
-}
-
-// NewAbsolute builds a new Pitch at an absolute octave
-func NewAbsolute(diatonic, octave, accidental int) Pitch {
-	return Pitch{interval.New(diatonic, octave, accidental)}
+// NewPitch builds a new Pitch at an octave relative to MiddleOctave
+func NewPitch(diatonic, octaves, accidental int) Pitch {
+	return Pitch{NewInterval(diatonic, MiddleOctave+octaves, accidental)}
 }
 
 // Pitch represents an absolute pitch in 12-tone equal temperament
 type Pitch struct {
-	interval.Interval
+	Interval
 }
 
 type AccidentalStrategy func(int) int
@@ -82,9 +76,9 @@ type AccidentalStrategy func(int) int
 // Name returns the name of the pitch using a particular name strategy (either SharpNames or FlatNames). The result is
 // in scientific pitch notation format.
 func (p Pitch) Name(strategy AccidentalStrategy) string {
-	semitones := int(mt_math.Mod(float64(p.Semitones()), 12.0))
+	semitones := normalizeChromatic(p.Semitones())
 	nameIndex := strategy(semitones)
-	delta := semitones - interval.DiatonicToChromatic(nameIndex)
+	delta := semitones - diatonicToChromatic(nameIndex)
 
 	if delta == 0 {
 		return fmt.Sprintf("%s%d", pitchNames[nameIndex], p.Octaves())
@@ -93,7 +87,7 @@ func (p Pitch) Name(strategy AccidentalStrategy) string {
 }
 
 // Transpose transposes a pitch by a given interval
-func (p Pitch) Transpose(i interval.Interval) Pitch {
+func (p Pitch) Transpose(i Interval) Pitch {
 	return Pitch{p.Interval.Transpose(i)}
 }
 

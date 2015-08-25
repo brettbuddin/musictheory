@@ -1,17 +1,17 @@
-package interval
+package mt
 
 import (
 	"fmt"
-	mt_math "github.com/brettbuddin/mt/pkg/math"
+	"github.com/brettbuddin/mt/pkg/math"
 )
 
 // Quality types
 const (
-	PerfectT QualityType = iota
-	MajorT
-	MinorT
-	AugmentedT
-	DiminishedT
+	PerfectType QualityType = iota
+	MajorType
+	MinorType
+	AugmentedType
+	DiminishedType
 )
 
 // Specific intervals
@@ -21,44 +21,44 @@ var Octave = Interval{1, 0, 0}
 type IntervalFunc func(int) Interval
 
 func Perfect(step int) Interval {
-	return qualityInterval(step, Quality{PerfectT, 0})
+	return qualityInterval(step, Quality{PerfectType, 0})
 }
 
 func Major(step int) Interval {
-	return qualityInterval(step, Quality{MajorT, 0})
+	return qualityInterval(step, Quality{MajorType, 0})
 }
 
 func Minor(step int) Interval {
-	return qualityInterval(step, Quality{MinorT, 0})
+	return qualityInterval(step, Quality{MinorType, 0})
 }
 
 func Augmented(step int) Interval {
-	return qualityInterval(step, Quality{AugmentedT, 1})
+	return qualityInterval(step, Quality{AugmentedType, 1})
 }
 
 func DoublyAugmented(step int) Interval {
-	return qualityInterval(step, Quality{AugmentedT, 2})
+	return qualityInterval(step, Quality{AugmentedType, 2})
 }
 
 func Diminished(step int) Interval {
-	return qualityInterval(step, Quality{DiminishedT, 1})
+	return qualityInterval(step, Quality{DiminishedType, 1})
 }
 
 func DoublyDiminished(step int) Interval {
-	return qualityInterval(step, Quality{DiminishedT, 2})
+	return qualityInterval(step, Quality{DiminishedType, 2})
 }
 
 func qualityInterval(step int, quality Quality) Interval {
 	diatonic := normalizeDiatonic(step - 1)
 	diff := qualityDiff(quality, canBePerfect(diatonic))
 	octaves := diatonicOctaves(step - 1)
-	return New(step, octaves, diff)
+	return NewInterval(step, octaves, diff)
 }
 
-// New Interval
-func New(step, octaves, offset int) Interval {
+// NewInterval builds a new Interval
+func NewInterval(step, octaves, offset int) Interval {
 	diatonic := normalizeDiatonic(step - 1)
-	chromatic := DiatonicToChromatic(diatonic) + offset
+	chromatic := diatonicToChromatic(diatonic) + offset
 
 	return Interval{octaves, diatonic, chromatic}
 }
@@ -81,7 +81,7 @@ func (i Interval) Octaves() int {
 
 // Diff returns the difference between the chromatic component and the chromatized diatonic
 func (i Interval) ChromaticDiff() int {
-	return i.chromatic - DiatonicToChromatic(i.diatonic)
+	return i.chromatic - diatonicToChromatic(i.diatonic)
 }
 
 // Diatonic returns the diatonic component
@@ -101,7 +101,7 @@ func (i Interval) Semitones() int {
 
 // Quality returns the Quality
 func (i Interval) Quality() Quality {
-	quality := diffQuality(i.Chromatic()-DiatonicToChromatic(i.Diatonic()), canBePerfect(i.Diatonic()))
+	quality := diffQuality(i.Chromatic()-diatonicToChromatic(i.Diatonic()), canBePerfect(i.Diatonic()))
 
 	if i.Octaves() < 0 {
 		return quality.Invert()
@@ -136,15 +136,15 @@ type QualityType int
 
 func (q QualityType) String() string {
 	switch q {
-	case PerfectT:
+	case PerfectType:
 		return "perfect"
-	case MajorT:
+	case MajorType:
 		return "major"
-	case MinorT:
+	case MinorType:
 		return "minor"
-	case AugmentedT:
+	case AugmentedType:
 		return "augmented"
-	case DiminishedT:
+	case DiminishedType:
 		return "diminished"
 	default:
 		return "unknown"
@@ -160,16 +160,16 @@ type Quality struct {
 // Invert returns a new, inverted Quality
 func (q Quality) Invert() Quality {
 	switch q.Type {
-	case PerfectT:
+	case PerfectType:
 		return q
-	case MajorT:
-		return Quality{MinorT, q.Size}
-	case MinorT:
-		return Quality{MajorT, q.Size}
-	case AugmentedT:
-		return Quality{DiminishedT, q.Size}
-	case DiminishedT:
-		return Quality{AugmentedT, q.Size}
+	case MajorType:
+		return Quality{MinorType, q.Size}
+	case MinorType:
+		return Quality{MajorType, q.Size}
+	case AugmentedType:
+		return Quality{DiminishedType, q.Size}
+	case DiminishedType:
+		return Quality{AugmentedType, q.Size}
 	default:
 		panic(fmt.Sprintf("invalid type: %d", q.Type))
 	}
@@ -180,8 +180,7 @@ func (q Quality) Eq(o Quality) bool {
 	return q.Type == o.Type && q.Size == o.Size
 }
 
-// DiatonicToChromatic converts a diatonic value to the chromatic equivalent
-func DiatonicToChromatic(interval int) int {
+func diatonicToChromatic(interval int) int {
 	if interval >= len(diatonicToChromaticLookup) {
 		panic(fmt.Sprintf("interval out of range: %d", interval))
 	}
@@ -192,13 +191,13 @@ func DiatonicToChromatic(interval int) int {
 var diatonicToChromaticLookup = []int{0, 2, 4, 5, 7, 9, 11}
 
 func qualityDiff(q Quality, perfect bool) int {
-	if q.Type == PerfectT || q.Type == MajorT {
+	if q.Type == PerfectType || q.Type == MajorType {
 		return 0
-	} else if q.Type == MinorT {
+	} else if q.Type == MinorType {
 		return -1
-	} else if q.Type == AugmentedT {
+	} else if q.Type == AugmentedType {
 		return q.Size
-	} else if q.Type == DiminishedT {
+	} else if q.Type == DiminishedType {
 		if perfect {
 			return -q.Size
 		}
@@ -210,23 +209,23 @@ func qualityDiff(q Quality, perfect bool) int {
 func diffQuality(diff int, perfect bool) Quality {
 	if perfect {
 		if diff == 0 {
-			return Quality{PerfectT, 0}
+			return Quality{PerfectType, 0}
 		} else if diff > 0 {
-			return Quality{AugmentedT, diff}
+			return Quality{AugmentedType, diff}
 		}
 
-		return Quality{DiminishedT, -diff}
+		return Quality{DiminishedType, -diff}
 	}
 
 	if diff == 0 {
-		return Quality{MajorT, 0}
+		return Quality{MajorType, 0}
 	} else if diff == -1 {
-		return Quality{MinorT, 0}
+		return Quality{MinorType, 0}
 	} else if diff > 0 {
-		return Quality{AugmentedT, diff}
+		return Quality{AugmentedType, diff}
 	}
 
-	return Quality{DiminishedT, -(diff + 1)}
+	return Quality{DiminishedType, -(diff + 1)}
 }
 
 func canBePerfect(interval int) bool {
@@ -234,11 +233,11 @@ func canBePerfect(interval int) bool {
 }
 
 func normalizeChromatic(v int) int {
-	return int(mt_math.Mod(float64(v), 12))
+	return int(math.Mod(float64(v), 12))
 }
 
 func normalizeDiatonic(v int) int {
-	return int(mt_math.Mod(float64(v), 7))
+	return int(math.Mod(float64(v), 7))
 }
 
 func diatonicOctaves(v int) int {

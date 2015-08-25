@@ -1,4 +1,4 @@
-package interval
+package mt
 
 import (
 	"testing"
@@ -72,12 +72,12 @@ var intervalQualityTests = []struct {
 	input    Interval
 	expected Quality
 }{
-	{Perfect(5), Quality{PerfectT, 0}},
-	{Major(2), Quality{MajorT, 0}},
-	{Minor(3), Quality{MinorT, 0}},
-	{Major(-12), Quality{MinorT, 0}},
-	{Augmented(1), Quality{AugmentedT, 1}},
-	{DoublyAugmented(1), Quality{AugmentedT, 2}},
+	{Perfect(5), Quality{PerfectType, 0}},
+	{Major(2), Quality{MajorType, 0}},
+	{Minor(3), Quality{MinorType, 0}},
+	{Major(-12), Quality{MinorType, 0}},
+	{Augmented(1), Quality{AugmentedType, 1}},
+	{DoublyAugmented(1), Quality{AugmentedType, 2}},
 }
 
 func TestIntervalQuality(test *testing.T) {
@@ -135,11 +135,11 @@ func TestDiatonicAndChromaticDiff(test *testing.T) {
 var qualityInversionTests = []struct {
 	input, expected Quality
 }{
-	{Quality{PerfectT, 0}, Quality{PerfectT, 0}},
-	{Quality{MajorT, 0}, Quality{MinorT, 0}},
-	{Quality{MinorT, 0}, Quality{MajorT, 0}},
-	{Quality{DiminishedT, 1}, Quality{AugmentedT, 1}},
-	{Quality{AugmentedT, 1}, Quality{DiminishedT, 1}},
+	{Quality{PerfectType, 0}, Quality{PerfectType, 0}},
+	{Quality{MajorType, 0}, Quality{MinorType, 0}},
+	{Quality{MinorType, 0}, Quality{MajorType, 0}},
+	{Quality{DiminishedType, 1}, Quality{AugmentedType, 1}},
+	{Quality{AugmentedType, 1}, Quality{DiminishedType, 1}},
 }
 
 func TestQualityInversion(test *testing.T) {

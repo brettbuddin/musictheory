@@ -1,4 +1,4 @@
-package pitch
+package mt
 
 import (
 	"testing"
@@ -19,7 +19,7 @@ var sharpNamesTests = []struct {
 
 func TestSharpPitchNames(test *testing.T) {
 	for i, t := range sharpNamesTests {
-		actual := New(t.pitch, 0, Sharp).Name(SharpNames)
+		actual := NewPitch(t.pitch, 0, Sharp).Name(SharpNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -41,7 +41,7 @@ var flatNamesTests = []struct {
 
 func TestFlatPitchNames(test *testing.T) {
 	for i, t := range flatNamesTests {
-		actual := New(t.pitch, 0, Flat).Name(FlatNames)
+		actual := NewPitch(t.pitch, 0, Flat).Name(FlatNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -63,7 +63,7 @@ var doubleSharpNamesTests = []struct {
 
 func TestDoubleSharpPitchNames(test *testing.T) {
 	for i, t := range doubleSharpNamesTests {
-		actual := New(t.pitch, 0, DoubleSharp).Name(SharpNames)
+		actual := NewPitch(t.pitch, 0, DoubleSharp).Name(SharpNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -85,7 +85,7 @@ var doubleFlatNamesTests = []struct {
 
 func TestDoubleFlatPitchNames(test *testing.T) {
 	for i, t := range doubleFlatNamesTests {
-		actual := New(t.pitch, 0, DoubleFlat).Name(FlatNames)
+		actual := NewPitch(t.pitch, 0, DoubleFlat).Name(FlatNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
