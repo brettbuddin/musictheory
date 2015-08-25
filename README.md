@@ -5,39 +5,35 @@
 
 Explorations in music theory. Consider this a toy.
 
-## Example
+## Usage
 
 ```go
 package main
 
 import (
-	"fmt"
 	"github.com/brettbuddin/mt"
 )
 
 func main() {
-	origin := mt.NewPitch(mt.C, 0, mt.Natural)
+	root := mt.NewPitch(mt.C, 0, mt.Natural)
 
-	fmt.Printf("Origin: %s (%f Hz / MIDI %d)\n", 
-            origin.Name(mt.SharpNames), 
-            origin.Freq(), 
-            origin.MIDI())
+	root.Name(mt.SharpNames) // C4
+	root.Freq()              // 261.625565 (Hz)
+	root.MIDI()              // 72
 
-    P5 := mt.Perfect(5)
-    A4 := mt.Augmented(4)
+	P5 := mt.Perfect(5)   // Perfect 5th
+	A4 := mt.Augmented(4) // Augmented 4th
 
-	fmt.Println("Perfect fifth below:", origin.Transpose(P5.Negate()).Name(mt.SharpNames))
-	fmt.Println("Perfect fifth above:", origin.Transpose(P5).Name(mt.SharpNames))
-	fmt.Println("Augmented fourth above:", origin.Transpose(A4).Name(mt.SharpNames))
+	root.Transpose(P5).Name(mt.SharpNames)          // G4
+	root.Transpose(A4).Name(mt.SharpNames)          // F#4
+	root.Transpose(P5.Negate()).Name(mt.SharpNames) // F3
+
+	mt.NewScale(root, mt.DorianIntervals)
+	// [C4, D4, Eb4, F4, G4, A4, Bb4]
+
+	mt.NewScale(root, mt.MixolydianIntervals)
+	// [C4, D4, E4, F4, G4, A4, Bb4]
 }
-```
-
-Outputs:
-```
-Origin: C4 (261.625565 Hz / MIDI 72)
-Perfect fifth below: F3
-Perfect fifth above: G4
-Augmented fourth above: F#4
 ```
 
 ## TODO

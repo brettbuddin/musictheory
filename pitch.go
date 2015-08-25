@@ -29,16 +29,14 @@ const (
 )
 
 var (
-	MiddleOctave        = 4
-	UseFancyAccidentals = false
+	MiddleOctave = 4
 
-	accidentalNames      = [5]string{"bb", "b", "", "#", "x"}
-	fancyAccidentalNames = [5]string{"♭♭", "♭", "", "♯", "𝄪"}
-	pitchNames           = [7]string{"C", "D", "E", "F", "G", "A", "B"}
-	namesForFlats        = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
-	namesForSharps       = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
-	semitone             = math.Pow(2, 1.0/12.0)
-	middleA              = NewPitch(A, 0, Natural)
+	accidentalNames = [5]string{"bb", "b", "", "#", "x"}
+	pitchNames      = [7]string{"C", "D", "E", "F", "G", "A", "B"}
+	namesForFlats   = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
+	namesForSharps  = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
+	semitone        = math.Pow(2, 1.0/12.0)
+	middleA         = NewPitch(A, 0, Natural)
 )
 
 // FlatNames maps an accidental to a correspending diatonic as flats
@@ -49,16 +47,6 @@ func FlatNames(i int) int {
 // SharpNames maps an accidental to a correspending diatonic as sharps
 func SharpNames(i int) int {
 	return namesForSharps[normalizeChromatic(i)]
-}
-
-type nameStrategy interface {
-	GetMappedIndex(int) int
-}
-
-type nameStrategyFunc func(int) int
-
-func (f nameStrategyFunc) GetMappedIndex(i int) int {
-	return f(i)
 }
 
 // NewPitch builds a new Pitch at an octave relative to MiddleOctave
@@ -102,8 +90,5 @@ func (p Pitch) MIDI() int {
 }
 
 func accidentalName(i int) string {
-	if UseFancyAccidentals {
-		return fancyAccidentalNames[int(mt_math.Mod(float64(i), float64(len(accidentalNames))))]
-	}
 	return accidentalNames[int(mt_math.Mod(float64(i), float64(len(accidentalNames))))]
 }

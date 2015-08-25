@@ -78,6 +78,7 @@ var intervalQualityTests = []struct {
 	{Major(-12), Quality{MinorType, 0}},
 	{Augmented(1), Quality{AugmentedType, 1}},
 	{DoublyAugmented(1), Quality{AugmentedType, 2}},
+	{DoublyDiminished(1), Quality{DiminishedType, 2}},
 }
 
 func TestIntervalQuality(test *testing.T) {
