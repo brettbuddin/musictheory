@@ -2,16 +2,16 @@ package mt
 
 // Scales
 var (
-	ChromaticScale,
-	MajorScale,
-	MinorScale,
-	IonianScale,
-	DorianScale,
-	PhrygianScale,
-	AeolianScale,
-	LydianScale,
-	MixolydianScale,
-	LocrianScale Intervals
+	ChromaticIntervals,
+	MajorIntervals,
+	MinorIntervals,
+	IonianIntervals,
+	DorianIntervals,
+	PhrygianIntervals,
+	AeolianIntervals,
+	LydianIntervals,
+	MixolydianIntervals,
+	LocrianIntervals Intervals
 )
 
 func init() {
@@ -32,20 +32,20 @@ func init() {
 	A4 := Augmented(4)
 	d5 := Diminished(5)
 
-	ChromaticScale = Intervals{P1, m2, M2, m3, M3, P4, A4, P5, m6, M6, m7, M7}
+	ChromaticIntervals = Intervals{P1, m2, M2, m3, M3, P4, A4, P5, m6, M6, m7, M7}
 
-	IonianScale = Intervals{P1, M2, M3, P4, P5, M6, M7}
-	MajorScale = IonianScale
+	IonianIntervals = Intervals{P1, M2, M3, P4, P5, M6, M7}
+	MajorIntervals = IonianIntervals
 
-	DorianScale = Intervals{P1, M2, m3, P4, P5, m6, m7}
-	PhrygianScale = Intervals{P1, m2, m3, P4, P5, m6, m7}
-	LydianScale = Intervals{P1, M2, M3, A4, P5, M6, M7}
-	MixolydianScale = Intervals{P1, M2, M3, P4, P5, M6, m7}
+	DorianIntervals = Intervals{P1, M2, m3, P4, P5, m6, m7}
+	PhrygianIntervals = Intervals{P1, m2, m3, P4, P5, m6, m7}
+	LydianIntervals = Intervals{P1, M2, M3, A4, P5, M6, M7}
+	MixolydianIntervals = Intervals{P1, M2, M3, P4, P5, M6, m7}
 
-	AeolianScale = Intervals{P1, M2, m3, P4, P5, m6, m7}
-	MinorScale = AeolianScale
+	AeolianIntervals = Intervals{P1, M2, m3, P4, P5, m6, m7}
+	MinorIntervals = AeolianIntervals
 
-	LocrianScale = Intervals{P1, m2, m3, P4, d5, m6, m7}
+	LocrianIntervals = Intervals{P1, m2, m3, P4, d5, m6, m7}
 }
 
 // Intervals is a set of intervals
