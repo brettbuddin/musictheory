@@ -12,24 +12,23 @@ package main
 
 import (
 	"fmt"
-	mi "github.com/brettbuddin/mt/pkg/interval"
-	mp "github.com/brettbuddin/mt/pkg/pitch"
+	"github.com/brettbuddin/mt"
 )
 
 func main() {
-	origin := mp.New(mp.C, 0, mp.Natural)
+	origin := mt.NewPitch(mt.C, 0, mt.Natural)
 
 	fmt.Printf("Origin: %s (%f Hz / MIDI %d)\n", 
-            origin.Name(mp.SharpNames), 
+            origin.Name(mt.SharpNames), 
             origin.Freq(), 
             origin.MIDI())
 
-    P5 := mi.Perfect(5)
-    A4 := mi.Augmented(4)
+    P5 := mt.Perfect(5)
+    A4 := mt.Augmented(4)
 
-	fmt.Println("Perfect fifth below:", origin.Transpose(P5.Negate()).Name(mp.SharpNames))
-	fmt.Println("Perfect fifth above:", origin.Transpose(P5).Name(mp.SharpNames))
-	fmt.Println("Augmented fourth above:", origin.Transpose(A4).Name(mp.SharpNames))
+	fmt.Println("Perfect fifth below:", origin.Transpose(P5.Negate()).Name(mt.SharpNames))
+	fmt.Println("Perfect fifth above:", origin.Transpose(P5).Name(mt.SharpNames))
+	fmt.Println("Augmented fourth above:", origin.Transpose(A4).Name(mt.SharpNames))
 }
 ```
 
