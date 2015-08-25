@@ -180,6 +180,17 @@ func (q Quality) Eq(o Quality) bool {
 	return q.Type == o.Type && q.Size == o.Size
 }
 
+func (q Quality) String() string {
+	switch q.Type {
+	case PerfectType, MajorType, MinorType:
+		return fmt.Sprintf("%s", q.Type)
+	case AugmentedType, DiminishedType:
+		return fmt.Sprintf("%s(%d)", q.Type, q.Size)
+	default:
+		return "unknown"
+	}
+}
+
 func diatonicToChromatic(interval int) int {
 	if interval >= len(diatonicToChromaticLookup) {
 		panic(fmt.Sprintf("interval out of range: %d", interval))
