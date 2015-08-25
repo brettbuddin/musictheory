@@ -54,7 +54,7 @@ type Intervals []Interval
 // Scale is a series of pitches
 type Scale []Pitch
 
-// Scale returns a Scale built using a set of intervals
+// NewScale returns a Scale built using a set of intervals
 func NewScale(root Pitch, intervals Intervals) Scale {
 	scale := Scale{}
 	for _, i := range intervals {
