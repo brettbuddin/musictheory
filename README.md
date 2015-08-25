@@ -38,12 +38,7 @@ func main() {
 
 ## TODO
 
-- Squash bugs
-- Document all of this
-- Full test coverage
-- Pitch Vectors
 - Chords
-- Scales (modal and special)
 - Inversions
 - Scientific pitch notation parsing
 - ...
