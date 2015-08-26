@@ -16,8 +16,6 @@ const (
 
 // Specific intervals
 
-var Octave = Interval{1, 0, 0}
-
 type IntervalFunc func(int) Interval
 
 func Perfect(step int) Interval {
@@ -46,6 +44,10 @@ func Diminished(step int) Interval {
 
 func DoublyDiminished(step int) Interval {
 	return qualityInterval(step, Quality{DiminishedType, 2})
+}
+
+func Octave(step int) Interval {
+	return Interval{step, 0, 0}
 }
 
 func qualityInterval(step int, quality Quality) Interval {
