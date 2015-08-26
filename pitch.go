@@ -2,7 +2,6 @@ package mt
 
 import (
 	"fmt"
-	mt_math "github.com/brettbuddin/mt/pkg/math"
 	"math"
 )
 
@@ -90,5 +89,5 @@ func (p Pitch) MIDI() int {
 }
 
 func accidentalName(i int) string {
-	return accidentalNames[int(mt_math.Mod(float64(i), float64(len(accidentalNames))))]
+	return accidentalNames[int(mod(float64(i), float64(len(accidentalNames))))]
 }
