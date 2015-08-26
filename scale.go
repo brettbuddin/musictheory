@@ -2,16 +2,16 @@ package mt
 
 // Scales
 var (
-	ChromaticIntervals,
-	MajorIntervals,
-	MinorIntervals,
-	IonianIntervals,
-	DorianIntervals,
-	PhrygianIntervals,
-	AeolianIntervals,
-	LydianIntervals,
-	MixolydianIntervals,
-	LocrianIntervals Intervals
+	ChromaticIntervals  Intervals
+	MajorIntervals      Intervals
+	MinorIntervals      Intervals
+	IonianIntervals     Intervals
+	DorianIntervals     Intervals
+	PhrygianIntervals   Intervals
+	AeolianIntervals    Intervals
+	LydianIntervals     Intervals
+	MixolydianIntervals Intervals
+	LocrianIntervals    Intervals
 )
 
 func init() {
