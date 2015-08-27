@@ -63,7 +63,7 @@ type AccidentalStrategy func(int) int
 // Name returns the name of the pitch using a particular name strategy (either SharpNames or FlatNames). The result is
 // in scientific pitch notation format.
 func (p Pitch) Name(strategy AccidentalStrategy) string {
-	semitones := normalizeChromatic(p.Semitones())
+	semitones := normalizeChromatic(p.Chromatic())
 	nameIndex := strategy(semitones)
 	delta := semitones - diatonicToChromatic(nameIndex)
 
