@@ -81,11 +81,6 @@ func (i Interval) Octaves() int {
 	return i.octaves
 }
 
-// Diff returns the difference between the chromatic component and the chromatized diatonic
-func (i Interval) ChromaticDiff() int {
-	return i.chromatic - diatonicToChromatic(i.diatonic)
-}
-
 // Diatonic returns the diatonic component
 func (i Interval) Diatonic() int {
 	return i.diatonic

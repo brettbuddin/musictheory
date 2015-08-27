@@ -114,25 +114,6 @@ func TestTranspose(test *testing.T) {
 	}
 }
 
-func TestDiatonicAndChromaticDiff(test *testing.T) {
-	data := []struct {
-		input    Interval
-		expected int
-	}{
-		{Interval{0, 0, 0}, 0},
-		{Interval{0, 0, 1}, 1},
-		{Interval{0, 0, 2}, 2},
-		{Interval{0, 0, -2}, -2},
-	}
-
-	for i, t := range data {
-		actual := t.input.ChromaticDiff()
-		if actual != t.expected {
-			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
-		}
-	}
-}
-
 func TestQualityInversion(test *testing.T) {
 	data := []struct {
 		input, expected Quality
