@@ -133,6 +133,18 @@ func (i Interval) Negate() Interval {
 	return Interval{-(i.octaves + 1), inverseDiatonic(i.diatonic), inverseChromatic(i.chromatic)}
 }
 
+// Intervals is a set of intervals
+type Intervals []Interval
+
+// Transpose transposes the intervals by the specified Interval
+func (is Intervals) Transpose(o Interval) Intervals {
+	intervals := Intervals{}
+	for _, i := range is {
+		intervals = append(intervals, i.Transpose(o))
+	}
+	return intervals
+}
+
 // QualityType represents the type a Quality can take
 type QualityType int
 
