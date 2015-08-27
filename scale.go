@@ -53,7 +53,7 @@ type Scale []Pitch
 
 // Transpose transposes a scale by the specified Interval
 func (s Scale) Transpose(i Interval) Scale {
-	scale := []Pitch{}
+	scale := Scale{}
 	for _, pitch := range s {
 		scale = append(scale, pitch.Transpose(i))
 	}
