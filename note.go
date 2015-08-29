@@ -1,46 +1,59 @@
 package mt
 
-import "math"
+import (
+	//"math"
+	"time"
+)
 
 // Dotted makes a dotted duration
 func Dotted(d Duration) Duration {
-	return Duration{d.Value, 1}
+	return Duration{d.Value, true, false}
 }
+
+// Triplet makes a dotted duration
+func Triplet(d Duration) Duration {
+	return Duration{d.Value, false, true}
+}
+
+const ns = 1000000000
 
 // Durations
 var (
-	Longa               = Duration{0.25, 0}
-	Breve               = Duration{0.5, 0}
-	Whole               = Duration{1, 0}
-	Half                = Duration{2, 0}
-	Quarter             = Duration{4, 0}
-	Eighth              = Duration{8, 0}
-	Sixteenth           = Duration{16, 0}
-	ThirtySecond        = Duration{32, 0}
-	SixtyFourth         = Duration{64, 0}
-	HundredTwentyEighth = Duration{128, 0}
+	D1   = Duration{1, false, false}
+	D2   = Duration{2, false, false}
+	D4   = Duration{4, false, false}
+	D8   = Duration{8, false, false}
+	D16  = Duration{16, false, false}
+	D32  = Duration{32, false, false}
+	D64  = Duration{64, false, false}
+	D128 = Duration{128, false, false}
 )
 
 // Duration represents a note's duration
 type Duration struct {
-	Value float64
-	Dots  int
+	Value   int
+	Dot     bool
+	Triplet bool
 }
 
-// Seconds returns the time in seconds the note's duration lasts.
+// Seconds returns the time in nanoseconds the note's duration lasts.
 // Calculated based on what unit gets the beat and what the BPM is.
-func (d Duration) Seconds(unit Duration, bpm int) float64 {
-	unitDuration := math.Ceil(unit.Value)
-	val := (60.0 / float64(bpm)) / (float64(d.Value) / 4.0) / (float64(unitDuration) / 4.0)
-	return float64(val*2) - val/math.Pow(2, float64(d.Dots))
+func (d Duration) Time(unit Duration, bpm int) time.Duration {
+	val := (60.0 / float64(bpm)) / (float64(d.Value) / 4.0) / (float64(unit.Value) / 4.0)
+
+	if d.Dot {
+		val += val / 2.0
+	}
+
+	if d.Triplet {
+		val = val / 3.0
+	}
+
+	return time.Duration(val * ns)
 }
 
 func (d Duration) String() string {
 	switch d.Value {
-	case 0.25:
-		return "longa"
-	case 0.5:
-		return "breve"
 	case 1:
 		return "whole"
 	case 2:
