@@ -19,14 +19,14 @@ const ns = 1000000000
 
 // Durations
 var (
-	D1   = Duration{1, false, false}
-	D2   = Duration{2, false, false}
-	D4   = Duration{4, false, false}
-	D8   = Duration{8, false, false}
-	D16  = Duration{16, false, false}
-	D32  = Duration{32, false, false}
-	D64  = Duration{64, false, false}
-	D128 = Duration{128, false, false}
+	D1   = Duration{1, false, false}   // Whole
+	D2   = Duration{2, false, false}   // Half
+	D4   = Duration{4, false, false}   // Quarter
+	D8   = Duration{8, false, false}   // Eighth
+	D16  = Duration{16, false, false}  // Sixteenth
+	D32  = Duration{32, false, false}  // Thirty Second
+	D64  = Duration{64, false, false}  // Sixty Fourth
+	D128 = Duration{128, false, false} // Hundred Twenty Eighth
 )
 
 // Duration represents a note's duration
