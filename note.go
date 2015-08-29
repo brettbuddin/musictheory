@@ -10,7 +10,7 @@ func Dotted(d Duration) Duration {
 	return Duration{d.Value, true, false}
 }
 
-// Triplet makes a dotted duration
+// Triplet makes a triplet duration
 func Triplet(d Duration) Duration {
 	return Duration{d.Value, false, true}
 }
