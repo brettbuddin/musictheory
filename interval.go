@@ -125,6 +125,11 @@ func (i Interval) Negate() Interval {
 	return Interval{-(i.octaves + 1), inverseDiatonic(i.diatonic), inverseChromatic(i.chromatic)}
 }
 
+// Eq determines if another interval is the same
+func (i Interval) Eq(o Interval) bool {
+	return i.Octaves() == o.Octaves() && i.Diatonic() == o.Diatonic() && i.Chromatic() == o.Chromatic()
+}
+
 // Intervals is a set of intervals
 type Intervals []Interval
 

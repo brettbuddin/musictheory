@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	root := mt.NewPitch(mt.C, 0, mt.Natural)
+	root := mt.NewPitch(mt.C, mt.Natural, 4)
 
 	root.Name(mt.SharpNames) // C4
 	root.Freq()              // 261.625565 (Hz)
@@ -34,8 +34,8 @@ func main() {
 	mt.NewScale(root, mt.MixolydianIntervals)
 	// [C4, D4, E4, F4, G4, A4, Bb4]
 
-    note := mt.NewNote(mt.C, 0, mt.Sharp, mt.D16) // C#4 sixteenth note
-    note.Time(mt.D4, 120)                         // 125ms (quarter note getting the beat at 120 BPM)
+    note := mt.NewNote(root, mt.D16) // C4 sixteenth note
+    note.Time(mt.D4, 120)            // 125ms (quarter note getting the beat at 120 BPM)
 }
 ```
 

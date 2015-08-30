@@ -80,8 +80,8 @@ type Note struct {
 }
 
 // NewNote creates a new note
-func NewNote(diatonic, octaves, accidental int, duration Duration) Note {
-	return Note{NewPitch(diatonic, octaves, accidental), duration}
+func NewNote(pitch Pitch, duration Duration) Note {
+	return Note{pitch, duration}
 }
 
 // Transpose transposes a note by a given interval

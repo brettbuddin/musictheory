@@ -28,14 +28,12 @@ const (
 )
 
 var (
-	MiddleOctave = 4
-
 	accidentalNames = [5]string{"bb", "b", "", "#", "x"}
 	pitchNames      = [7]string{"C", "D", "E", "F", "G", "A", "B"}
 	namesForFlats   = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
 	namesForSharps  = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
 	semitone        = math.Pow(2, 1.0/12.0)
-	middleA         = NewPitch(A, 0, Natural)
+	middleA         = NewPitch(A, Natural, 4)
 )
 
 // FlatNames maps an accidental to a correspending diatonic as flats
@@ -48,9 +46,9 @@ func SharpNames(i int) int {
 	return namesForSharps[normalizeChromatic(i)]
 }
 
-// NewPitch builds a new Pitch at an octave relative to MiddleOctave
-func NewPitch(diatonic, octaves, accidental int) Pitch {
-	return Pitch{NewInterval(diatonic, MiddleOctave+octaves, accidental)}
+// NewPitch builds a new Pitch
+func NewPitch(diatonic, accidental, octaves int) Pitch {
+	return Pitch{NewInterval(diatonic, octaves, accidental)}
 }
 
 // Pitch represents an absolute pitch in 12-tone equal temperament
@@ -76,6 +74,11 @@ func (p Pitch) Name(strategy AccidentalStrategy) string {
 // Transpose transposes a pitch by a given interval
 func (p Pitch) Transpose(i Interval) Pitch {
 	return Pitch{p.Interval.Transpose(i)}
+}
+
+// Eq determines if another pitch is the same
+func (p Pitch) Eq(o Pitch) bool {
+	return p.Interval.Eq(o.Interval)
 }
 
 // Freq returns the absolute frequency of a pitch in Hz

@@ -22,7 +22,7 @@ func TestSharpPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, 0, Sharp).Name(SharpNames)
+		actual := NewPitch(t.pitch, Sharp, 4).Name(SharpNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -44,7 +44,7 @@ func TestFlatPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, 0, Flat).Name(FlatNames)
+		actual := NewPitch(t.pitch, Flat, 4).Name(FlatNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -66,7 +66,7 @@ func TestDoubleSharpPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, 0, DoubleSharp).Name(SharpNames)
+		actual := NewPitch(t.pitch, DoubleSharp, 4).Name(SharpNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -88,7 +88,7 @@ func TestDoubleFlatPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, 0, DoubleFlat).Name(FlatNames)
+		actual := NewPitch(t.pitch, DoubleFlat, 4).Name(FlatNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -100,8 +100,8 @@ func TestFrequency(test *testing.T) {
 		input    Pitch
 		expected float64
 	}{
-		{NewPitch(C, 0, Natural), 261.625565},
-		{NewPitch(A, 0, Natural), 440.0},
+		{NewPitch(C, Natural, 4), 261.625565},
+		{NewPitch(A, Natural, 4), 440.0},
 	}
 
 	for _, t := range data {
@@ -121,9 +121,9 @@ func TestMIDI(test *testing.T) {
 		input    Pitch
 		expected int
 	}{
-		{NewPitch(C, -1, Natural), 60},
-		{NewPitch(C, 0, Natural), 72},
-		{NewPitch(A, 0, Natural), 81},
+		{NewPitch(C, Natural, 3), 60},
+		{NewPitch(C, Natural, 4), 72},
+		{NewPitch(A, Natural, 4), 81},
 	}
 
 	for _, t := range data {

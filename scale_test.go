@@ -15,16 +15,16 @@ var scaleTests []scaleTest
 
 func init() {
 	scaleTests = []scaleTest{
-		{NewPitch(C, 0, Natural), ChromaticIntervals, []string{"C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4"}},
-		{NewPitch(C, 0, Natural), IonianIntervals, []string{"C4", "D4", "E4", "F4", "G4", "A4", "B4"}},
-		{NewPitch(C, 0, Natural), DorianIntervals, []string{"C4", "D4", "Eb4", "F4", "G4", "A4", "Bb4"}},
-		{NewPitch(C, 0, Natural), PhrygianIntervals, []string{"C4", "Db4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
-		{NewPitch(C, 0, Natural), LydianIntervals, []string{"C4", "D4", "E4", "Gb4", "G4", "A4", "B4"}},
-		{NewPitch(C, 0, Natural), MixolydianIntervals, []string{"C4", "D4", "E4", "F4", "G4", "A4", "Bb4"}},
-		{NewPitch(C, 0, Natural), AeolianIntervals, []string{"C4", "D4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
-		{NewPitch(C, 0, Natural), LocrianIntervals, []string{"C4", "Db4", "Eb4", "F4", "Gb4", "Ab4", "Bb4"}},
-		{NewPitch(C, 0, Natural), MajorIntervals, []string{"C4", "D4", "E4", "F4", "G4", "A4", "B4"}},
-		{NewPitch(C, 0, Natural), MinorIntervals, []string{"C4", "D4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
+		{NewPitch(C, Natural, 4), ChromaticIntervals, []string{"C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4"}},
+		{NewPitch(C, Natural, 4), IonianIntervals, []string{"C4", "D4", "E4", "F4", "G4", "A4", "B4"}},
+		{NewPitch(C, Natural, 4), DorianIntervals, []string{"C4", "D4", "Eb4", "F4", "G4", "A4", "Bb4"}},
+		{NewPitch(C, Natural, 4), PhrygianIntervals, []string{"C4", "Db4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
+		{NewPitch(C, Natural, 4), LydianIntervals, []string{"C4", "D4", "E4", "Gb4", "G4", "A4", "B4"}},
+		{NewPitch(C, Natural, 4), MixolydianIntervals, []string{"C4", "D4", "E4", "F4", "G4", "A4", "Bb4"}},
+		{NewPitch(C, Natural, 4), AeolianIntervals, []string{"C4", "D4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
+		{NewPitch(C, Natural, 4), LocrianIntervals, []string{"C4", "Db4", "Eb4", "F4", "Gb4", "Ab4", "Bb4"}},
+		{NewPitch(C, Natural, 4), MajorIntervals, []string{"C4", "D4", "E4", "F4", "G4", "A4", "B4"}},
+		{NewPitch(C, Natural, 4), MinorIntervals, []string{"C4", "D4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
 	}
 }
 
