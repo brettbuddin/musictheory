@@ -8,6 +8,7 @@ import (
 
 var notation = regexp.MustCompile("([ABCDEFG])(bb|b|#|x)?(\\d+)")
 
+// MustParsePitch parses and returns a Pitch in scientific pitch notation or panics
 func MustParsePitch(str string) *Pitch {
 	pitch, err := ParsePitch(str)
 	if err != nil {
@@ -16,6 +17,7 @@ func MustParsePitch(str string) *Pitch {
 	return pitch
 }
 
+// ParsePitch parses and returns a Pitch in scientific pitch notation
 func ParsePitch(str string) (*Pitch, error) {
 	matches := notation.FindStringSubmatch(str)
 	if len(matches) < 1 {
