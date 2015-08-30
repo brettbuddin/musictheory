@@ -43,8 +43,6 @@ func main() {
 
 ## TODO
 
-- Chords
-- Inversions
-- Scientific pitch notation parsing
+- Chords and inversions
 - ...
 - Write a tool or two that uses this stuff...
