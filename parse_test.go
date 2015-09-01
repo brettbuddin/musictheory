@@ -12,6 +12,8 @@ func TestParsePitch(test *testing.T) {
 		{"C4", NewPitch(C, Natural, 4)},
 		{"C#4", NewPitch(C, Sharp, 4)},
 		{"Ab3", NewPitch(A, Flat, 3)},
+		{"Abb3", NewPitch(A, DoubleFlat, 3)},
+		{"Cx4", NewPitch(C, DoubleSharp, 4)},
 	}
 
 	for i, t := range data {
