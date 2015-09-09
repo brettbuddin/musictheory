@@ -64,40 +64,25 @@ func NewInterval(step, octaves, offset int) Interval {
 
 // Interval represents an interval in 12-tone equal temperament
 type Interval struct {
-	octaves   int
-	diatonic  int
-	chromatic int
+	Octaves   int
+	Diatonic  int
+	Chromatic int
 }
 
 func (i Interval) String() string {
-	return fmt.Sprintf("(octaves: %d, diatonic: %d, chromatic: %d)", i.octaves, i.diatonic, i.chromatic)
-}
-
-// Octaves returns the octave component
-func (i Interval) Octaves() int {
-	return i.octaves
-}
-
-// Diatonic returns the diatonic component
-func (i Interval) Diatonic() int {
-	return i.diatonic
-}
-
-// Chromatic returns the chromatic component
-func (i Interval) Chromatic() int {
-	return i.chromatic
+	return fmt.Sprintf("(octaves: %d, diatonic: %d, chromatic: %d)", i.Octaves, i.Diatonic, i.Chromatic)
 }
 
 // Semitones returns the total number of semitones that make up the interval
 func (i Interval) Semitones() int {
-	return i.octaves*12 + i.chromatic
+	return i.Octaves*12 + i.Chromatic
 }
 
 // Quality returns the Quality
 func (i Interval) Quality() Quality {
-	quality := diffQuality(i.Chromatic()-diatonicToChromatic(i.Diatonic()), canBePerfect(i.Diatonic()))
+	quality := diffQuality(i.Chromatic-diatonicToChromatic(i.Diatonic), canBePerfect(i.Diatonic))
 
-	if i.Octaves() < 0 {
+	if i.Octaves < 0 {
 		return quality.Invert()
 	}
 
@@ -106,28 +91,28 @@ func (i Interval) Quality() Quality {
 
 // Transpose returns a new Interval that has been transposed by the given Interval
 func (i Interval) Transpose(o Interval) Interval {
-	diatonic := i.Diatonic() + o.Diatonic()
+	diatonic := i.Diatonic + o.Diatonic
 	diatonicOctaves := diatonicOctaves(diatonic)
 	diatonicRemainder := normalizeDiatonic(diatonic)
 
-	octaves := i.Octaves() + o.Octaves() + diatonicOctaves
-	chromatic := normalizeChromatic(i.Chromatic() + o.Chromatic())
+	octaves := i.Octaves + o.Octaves + diatonicOctaves
+	chromatic := normalizeChromatic(i.Chromatic + o.Chromatic)
 
 	return Interval{octaves, diatonicRemainder, chromatic}
 }
 
 // Negate returns a new, negated Interval
 func (i Interval) Negate() Interval {
-	if i.diatonic == 0 && i.chromatic == 0 {
-		return Interval{-i.octaves, i.diatonic, i.chromatic}
+	if i.Diatonic == 0 && i.Chromatic == 0 {
+		return Interval{-i.Octaves, i.Diatonic, i.Chromatic}
 	}
 
-	return Interval{-(i.octaves + 1), inverseDiatonic(i.diatonic), inverseChromatic(i.chromatic)}
+	return Interval{-(i.Octaves + 1), inverseDiatonic(i.Diatonic), inverseChromatic(i.Chromatic)}
 }
 
 // Eq determines if another interval is the same
 func (i Interval) Eq(o Interval) bool {
-	return i.Octaves() == o.Octaves() && i.Diatonic() == o.Diatonic() && i.Chromatic() == o.Chromatic()
+	return i.Octaves == o.Octaves && i.Diatonic == o.Diatonic && i.Chromatic == o.Chromatic
 }
 
 // Intervals is a set of intervals

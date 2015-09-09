@@ -54,9 +54,9 @@ func TestIntervals(test *testing.T) {
 	for i, t := range data {
 		actual := t.typeFunc(t.step)
 
-		if actual.octaves != t.expectedOctaves ||
-			actual.diatonic != t.expectedDiatonic ||
-			actual.chromatic != t.expectedChromatic {
+		if actual.Octaves != t.expectedOctaves ||
+			actual.Diatonic != t.expectedDiatonic ||
+			actual.Chromatic != t.expectedChromatic {
 
 			test.Errorf("index=%d actual=%d expected=(octaves=%d diatonic=%d chromatic=%d)",
 				i,
@@ -105,9 +105,9 @@ func TestTranspose(test *testing.T) {
 
 	for i, t := range data {
 		actual := t.initial.Transpose(t.interval)
-		if actual.Octaves() != t.expected.Octaves() ||
-			actual.Diatonic() != t.expected.Diatonic() ||
-			actual.Chromatic() != t.expected.Chromatic() {
+		if actual.Octaves != t.expected.Octaves ||
+			actual.Diatonic != t.expected.Diatonic ||
+			actual.Chromatic != t.expected.Chromatic {
 
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}

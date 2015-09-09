@@ -61,14 +61,14 @@ type AccidentalStrategy func(int) int
 // Name returns the name of the pitch using a particular name strategy (either SharpNames or FlatNames). The result is
 // in scientific pitch notation format.
 func (p Pitch) Name(strategy AccidentalStrategy) string {
-	semitones := normalizeChromatic(p.Chromatic())
+	semitones := normalizeChromatic(p.Chromatic)
 	nameIndex := strategy(semitones)
 	delta := semitones - diatonicToChromatic(nameIndex)
 
 	if delta == 0 {
-		return fmt.Sprintf("%s%d", pitchNames[nameIndex], p.Octaves())
+		return fmt.Sprintf("%s%d", pitchNames[nameIndex], p.Octaves)
 	}
-	return fmt.Sprintf("%s%s%d", pitchNames[nameIndex], accidentalName(delta+2), p.Octaves())
+	return fmt.Sprintf("%s%s%d", pitchNames[nameIndex], accidentalName(delta+2), p.Octaves)
 }
 
 // Transpose transposes a pitch by a given interval
