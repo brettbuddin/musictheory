@@ -97,7 +97,7 @@ func (i Interval) Quality() Quality {
 }
 
 // Transpose returns a new Interval that has been transposed by the given Interval
-func (i Interval) Transpose(o Interval) Interval {
+func (i Interval) Transpose(o Interval) Transposer {
 	diatonic := i.Diatonic + o.Diatonic
 	diatonicOctaves := diatonicOctaves(diatonic)
 	diatonicRemainder := normalizeDiatonic(diatonic)
@@ -120,18 +120,6 @@ func (i Interval) Negate() Interval {
 // Eq determines if another interval is the same
 func (i Interval) Eq(o Interval) bool {
 	return i.Octaves == o.Octaves && i.Diatonic == o.Diatonic && i.Chromatic == o.Chromatic
-}
-
-// Intervals is a set of intervals
-type Intervals []Interval
-
-// Transpose transposes the intervals by the specified Interval
-func (is Intervals) Transpose(o Interval) Intervals {
-	intervals := Intervals{}
-	for _, i := range is {
-		intervals = append(intervals, i.Transpose(o))
-	}
-	return intervals
 }
 
 // QualityType represents the type a Quality can take

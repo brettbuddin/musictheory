@@ -79,7 +79,7 @@ func (p Pitch) Name(strategy ModifierStrategy) string {
 
 // Transpose transposes a pitch by a given interval
 func (p Pitch) Transpose(i Interval) Transposer {
-	return Pitch{p.Interval.Transpose(i)}
+	return Pitch{p.Interval.Transpose(i).(Interval)}
 }
 
 // Eq determines if another pitch is the same

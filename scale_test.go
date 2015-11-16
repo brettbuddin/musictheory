@@ -7,7 +7,7 @@ import (
 
 type scaleTest struct {
 	root      Pitch
-	intervals Intervals
+	intervals []Interval
 	expected  []string
 }
 

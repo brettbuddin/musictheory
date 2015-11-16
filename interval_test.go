@@ -104,7 +104,7 @@ func TestTranspose(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := t.initial.Transpose(t.interval)
+		actual := t.initial.Transpose(t.interval).(Interval)
 		if actual.Octaves != t.expected.Octaves ||
 			actual.Diatonic != t.expected.Diatonic ||
 			actual.Chromatic != t.expected.Chromatic {
