@@ -18,8 +18,8 @@ func main() {
 	root := mt.NewPitch(mt.C, mt.Natural, 4)
 
 	root.Name(mt.AscNames) // C4
-	root.Freq()              // 261.625565 (Hz)
-	root.MIDI()              // 72
+	root.Freq()            // 261.625565 (Hz)
+	root.MIDI()            // 72
 
 	P5 := mt.Perfect(5)   // Perfect 5th
 	A4 := mt.Augmented(4) // Augmented 4th
