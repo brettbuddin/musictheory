@@ -35,7 +35,7 @@ type Duration struct {
 	Triplet bool
 }
 
-// Seconds returns the time in nanoseconds the note's duration lasts.
+// Time returns the time in nanoseconds the note's duration lasts.
 // Calculated based on what unit gets the beat and what the BPM is.
 func (d Duration) Time(unit Duration, bpm int) time.Duration {
 	val := (60.0 / float64(bpm)) / (float64(d.Value) / 4.0) / (float64(unit.Value) / 4.0)
@@ -74,6 +74,7 @@ func (d Duration) String() string {
 	}
 }
 
+// Note is a pitch with a duration
 type Note struct {
 	Pitch
 	Duration
@@ -85,6 +86,6 @@ func NewNote(pitch Pitch, duration Duration) Note {
 }
 
 // Transpose transposes a note by a given interval
-func (n Note) Transpose(i Interval) Note {
-	return Note{n.Pitch.Transpose(i), n.Duration}
+func (n Note) Transpose(i Interval) Transposer {
+	return Note{n.Pitch.Transpose(i).(Pitch), n.Duration}
 }

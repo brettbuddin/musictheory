@@ -17,16 +17,16 @@ import (
 func main() {
 	root := mt.NewPitch(mt.C, mt.Natural, 4)
 
-	root.Name(mt.SharpNames) // C4
+	root.Name(mt.AscNames) // C4
 	root.Freq()              // 261.625565 (Hz)
 	root.MIDI()              // 72
 
 	P5 := mt.Perfect(5)   // Perfect 5th
 	A4 := mt.Augmented(4) // Augmented 4th
 
-	root.Transpose(P5).Name(mt.SharpNames)          // G4
-	root.Transpose(A4).Name(mt.SharpNames)          // F#4
-	root.Transpose(P5.Negate()).Name(mt.SharpNames) // F3
+	root.Transpose(P5).(mt.Pitch).Name(mt.AscNames)          // G4
+	root.Transpose(A4).(mt.Pitch).Name(mt.AscNames)          // F#4
+	root.Transpose(P5.Negate()).(mt.Pitch).Name(mt.AscNames) // F3
 
 	mt.NewScale(root, mt.DorianIntervals)
 	// [C4, D4, Eb4, F4, G4, A4, Bb4]

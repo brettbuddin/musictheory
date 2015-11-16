@@ -11,38 +11,45 @@ const (
 	DiminishedType
 )
 
-// Specific intervals
-
+// IntervalFunc creates an interval at as specific step/degree
 type IntervalFunc func(int) Interval
 
+// Perfect interval
 func Perfect(step int) Interval {
 	return qualityInterval(step, Quality{PerfectType, 0})
 }
 
+// Major interval
 func Major(step int) Interval {
 	return qualityInterval(step, Quality{MajorType, 0})
 }
 
+// Minor interval
 func Minor(step int) Interval {
 	return qualityInterval(step, Quality{MinorType, 0})
 }
 
+// Augmented interval
 func Augmented(step int) Interval {
 	return qualityInterval(step, Quality{AugmentedType, 1})
 }
 
+// DoublyAugmented interval
 func DoublyAugmented(step int) Interval {
 	return qualityInterval(step, Quality{AugmentedType, 2})
 }
 
+// Diminished interval
 func Diminished(step int) Interval {
 	return qualityInterval(step, Quality{DiminishedType, 1})
 }
 
+// DoublyDiminished interval
 func DoublyDiminished(step int) Interval {
 	return qualityInterval(step, Quality{DiminishedType, 2})
 }
 
+// Octave interval
 func Octave(step int) Interval {
 	return Interval{step, 0, 0}
 }

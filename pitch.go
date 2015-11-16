@@ -5,18 +5,18 @@ import (
 	"math"
 )
 
-// Modifier offset values
+// Modifiers
 const (
 	DoubleFlat  = -2
 	Flat        = -1
 	Natural     = 0
 	Sharp       = 1
 	DoubleSharp = 2
-
-	concertFrequency = 440.0
 )
 
-// Note steps
+const concertFrequency = 440.0
+
+// Note naturals
 const (
 	C int = iota + 1
 	D
@@ -36,13 +36,18 @@ var (
 	middleA        = NewPitch(A, Natural, 4)
 )
 
-// FlatNames maps an modifier to a correspending diatonic as flats
-func FlatNames(i int) int {
+// Transposer is something that shifts by an Interval
+type Transposer interface {
+	Transpose(Interval) Transposer
+}
+
+// DescNames maps an modifier to a correspending diatonic as flats
+func DescNames(i int) int {
 	return namesForFlats[normalizeChromatic(i)]
 }
 
-// SharpNames maps an modifier to a correspending diatonic as sharps
-func SharpNames(i int) int {
+// AscNames maps an modifier to a correspending diatonic as sharps
+func AscNames(i int) int {
 	return namesForSharps[normalizeChromatic(i)]
 }
 
@@ -56,6 +61,7 @@ type Pitch struct {
 	Interval
 }
 
+// ModifierStrategy is a function that maps a modifier to a diatonic
 type ModifierStrategy func(int) int
 
 // Name returns the name of the pitch using a particular name strategy (either SharpNames or FlatNames). The result is
@@ -72,7 +78,7 @@ func (p Pitch) Name(strategy ModifierStrategy) string {
 }
 
 // Transpose transposes a pitch by a given interval
-func (p Pitch) Transpose(i Interval) Pitch {
+func (p Pitch) Transpose(i Interval) Transposer {
 	return Pitch{p.Interval.Transpose(i)}
 }
 

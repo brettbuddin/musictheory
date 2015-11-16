@@ -48,20 +48,20 @@ func init() {
 	LocrianIntervals = Intervals{P1, m2, m3, P4, d5, m6, m7}
 }
 
-// Scale is a series of pitches
-type Scale []Pitch
+// Scale is a series of Transposers
+type Scale []Transposer
 
 // Transpose transposes a scale by the specified Interval
-func (s Scale) Transpose(i Interval) Scale {
+func (s Scale) Transpose(i Interval) Transposer {
 	scale := Scale{}
-	for _, pitch := range s {
-		scale = append(scale, pitch.Transpose(i))
+	for _, transposer := range s {
+		scale = append(scale, transposer.Transpose(i))
 	}
 	return scale
 }
 
 // NewScale returns a Scale built using a set of intervals
-func NewScale(root Pitch, intervals Intervals) Scale {
+func NewScale(root Transposer, intervals Intervals) Scale {
 	scale := Scale{}
 	for _, i := range intervals {
 		scale = append(scale, root.Transpose(i))
