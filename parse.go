@@ -25,7 +25,7 @@ func ParsePitch(str string) (*Pitch, error) {
 	}
 
 	class := matches[1]
-	accidental := matches[2]
+	modifier := matches[2]
 	octave, _ := strconv.Atoi(matches[3])
 
 	classIndex, err := classNameIndex(class)
@@ -33,12 +33,12 @@ func ParsePitch(str string) (*Pitch, error) {
 		return nil, err
 	}
 
-	accidentalOffset, err := accidentalNameOffset(accidental)
+	modifierOffset, err := modifierNameOffset(modifier)
 	if err != nil {
 		return nil, err
 	}
 
-	pitch := NewPitch(classIndex+1, accidentalOffset, octave)
+	pitch := NewPitch(classIndex+1, modifierOffset, octave)
 
 	return &pitch, nil
 }
@@ -53,12 +53,12 @@ func classNameIndex(name string) (int, error) {
 	return 0, fmt.Errorf("unknown class name: %s", name)
 }
 
-func accidentalNameOffset(name string) (int, error) {
-	for i, a := range accidentalNames {
+func modifierNameOffset(name string) (int, error) {
+	for i, a := range modifierNames {
 		if a == name {
 			return i - 2, nil
 		}
 	}
 
-	return 0, fmt.Errorf("unknown accidental: %s", name)
+	return 0, fmt.Errorf("unknown modifier: %s", name)
 }

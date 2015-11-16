@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-// Accidental offset values
+// Modifier offset values
 const (
 	DoubleFlat  = -2
 	Flat        = -1
@@ -28,27 +28,27 @@ const (
 )
 
 var (
-	accidentalNames = [5]string{"bb", "b", "", "#", "x"}
-	pitchNames      = [7]string{"C", "D", "E", "F", "G", "A", "B"}
-	namesForFlats   = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
-	namesForSharps  = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
-	semitone        = math.Pow(2, 1.0/12.0)
-	middleA         = NewPitch(A, Natural, 4)
+	modifierNames  = [5]string{"bb", "b", "", "#", "x"}
+	pitchNames     = [7]string{"C", "D", "E", "F", "G", "A", "B"}
+	namesForFlats  = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
+	namesForSharps = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
+	semitone       = math.Pow(2, 1.0/12.0)
+	middleA        = NewPitch(A, Natural, 4)
 )
 
-// FlatNames maps an accidental to a correspending diatonic as flats
+// FlatNames maps an modifier to a correspending diatonic as flats
 func FlatNames(i int) int {
 	return namesForFlats[normalizeChromatic(i)]
 }
 
-// SharpNames maps an accidental to a correspending diatonic as sharps
+// SharpNames maps an modifier to a correspending diatonic as sharps
 func SharpNames(i int) int {
 	return namesForSharps[normalizeChromatic(i)]
 }
 
 // NewPitch builds a new Pitch
-func NewPitch(diatonic, accidental, octaves int) Pitch {
-	return Pitch{NewInterval(diatonic, octaves, accidental)}
+func NewPitch(diatonic, modifier, octaves int) Pitch {
+	return Pitch{NewInterval(diatonic, octaves, modifier)}
 }
 
 // Pitch represents an absolute pitch in 12-tone equal temperament
@@ -56,11 +56,11 @@ type Pitch struct {
 	Interval
 }
 
-type AccidentalStrategy func(int) int
+type ModifierStrategy func(int) int
 
 // Name returns the name of the pitch using a particular name strategy (either SharpNames or FlatNames). The result is
 // in scientific pitch notation format.
-func (p Pitch) Name(strategy AccidentalStrategy) string {
+func (p Pitch) Name(strategy ModifierStrategy) string {
 	semitones := normalizeChromatic(p.Chromatic)
 	nameIndex := strategy(semitones)
 	delta := semitones - diatonicToChromatic(nameIndex)
@@ -68,7 +68,7 @@ func (p Pitch) Name(strategy AccidentalStrategy) string {
 	if delta == 0 {
 		return fmt.Sprintf("%s%d", pitchNames[nameIndex], p.Octaves)
 	}
-	return fmt.Sprintf("%s%s%d", pitchNames[nameIndex], accidentalName(delta+2), p.Octaves)
+	return fmt.Sprintf("%s%s%d", pitchNames[nameIndex], modifierName(delta+2), p.Octaves)
 }
 
 // Transpose transposes a pitch by a given interval
@@ -91,6 +91,6 @@ func (p Pitch) MIDI() int {
 	return p.Semitones() + 24
 }
 
-func accidentalName(i int) string {
-	return accidentalNames[int(mod(float64(i), float64(len(accidentalNames))))]
+func modifierName(i int) string {
+	return modifierNames[int(mod(float64(i), float64(len(modifierNames))))]
 }
