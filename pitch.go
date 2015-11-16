@@ -64,7 +64,7 @@ type Pitch struct {
 // ModifierStrategy is a function that maps a modifier to a diatonic
 type ModifierStrategy func(int) int
 
-// Name returns the name of the pitch using a particular name strategy (either SharpNames or FlatNames). The result is
+// Name returns the name of the pitch using a particular name strategy (either AscNames or DescNames). The result is
 // in scientific pitch notation format.
 func (p Pitch) Name(strategy ModifierStrategy) string {
 	semitones := normalizeChromatic(p.Chromatic)
