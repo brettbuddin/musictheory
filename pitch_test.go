@@ -22,7 +22,7 @@ func TestSharpPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, Sharp, 4).Name(SharpNames)
+		actual := NewPitch(t.pitch, Sharp, 4).Name(AscNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -44,7 +44,7 @@ func TestFlatPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, Flat, 4).Name(FlatNames)
+		actual := NewPitch(t.pitch, Flat, 4).Name(DescNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -66,7 +66,7 @@ func TestDoubleSharpPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, DoubleSharp, 4).Name(SharpNames)
+		actual := NewPitch(t.pitch, DoubleSharp, 4).Name(AscNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
@@ -88,7 +88,7 @@ func TestDoubleFlatPitchNames(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewPitch(t.pitch, DoubleFlat, 4).Name(FlatNames)
+		actual := NewPitch(t.pitch, DoubleFlat, 4).Name(DescNames)
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}

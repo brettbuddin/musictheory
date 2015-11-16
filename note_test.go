@@ -18,7 +18,8 @@ func TestNoteDuration(test *testing.T) {
 		{D1, D8, 60, 2 * time.Second},
 		{D1, D8, 60, 2 * time.Second},
 		{Triplet(D4), D4, 60, (1 * time.Second / 3.0)},
-		{Dotted(D4), D4, 60, 1500 * time.Millisecond},
+		{Dotted(D4, 1), D4, 60, 1500 * time.Millisecond},
+		{Dotted(D4, 2), D4, 60, 2250 * time.Millisecond},
 	}
 
 	for i, t := range data {

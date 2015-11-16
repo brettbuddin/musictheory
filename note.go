@@ -5,33 +5,33 @@ import (
 )
 
 // Dotted makes a dotted duration
-func Dotted(d Duration) Duration {
-	return Duration{d.Value, true, false}
+func Dotted(d Duration, dots int) Duration {
+	return Duration{d.Value, dots, false}
 }
 
 // Triplet makes a triplet duration
 func Triplet(d Duration) Duration {
-	return Duration{d.Value, false, true}
+	return Duration{d.Value, 0, true}
 }
 
 const ns = 1000000000
 
 // Durations
 var (
-	D1   = Duration{1, false, false}   // Whole
-	D2   = Duration{2, false, false}   // Half
-	D4   = Duration{4, false, false}   // Quarter
-	D8   = Duration{8, false, false}   // Eighth
-	D16  = Duration{16, false, false}  // Sixteenth
-	D32  = Duration{32, false, false}  // Thirty Second
-	D64  = Duration{64, false, false}  // Sixty Fourth
-	D128 = Duration{128, false, false} // Hundred Twenty Eighth
+	D1   = Duration{1, 0, false}   // Whole
+	D2   = Duration{2, 0, false}   // Half
+	D4   = Duration{4, 0, false}   // Quarter
+	D8   = Duration{8, 0, false}   // Eighth
+	D16  = Duration{16, 0, false}  // Sixteenth
+	D32  = Duration{32, 0, false}  // Thirty Second
+	D64  = Duration{64, 0, false}  // Sixty Fourth
+	D128 = Duration{128, 0, false} // Hundred Twenty Eighth
 )
 
 // Duration represents a note's duration
 type Duration struct {
 	Value   int
-	Dot     bool
+	Dots    int
 	Triplet bool
 }
 
@@ -40,7 +40,7 @@ type Duration struct {
 func (d Duration) Time(unit Duration, bpm int) time.Duration {
 	val := (60.0 / float64(bpm)) / (float64(d.Value) / 4.0) / (float64(unit.Value) / 4.0)
 
-	if d.Dot {
+	for i := 0; i < d.Dots; i++ {
 		val += val / 2.0
 	}
 
