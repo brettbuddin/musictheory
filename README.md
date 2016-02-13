@@ -11,7 +11,7 @@ Explorations in music theory.
 package main
 
 import (
-	mt "github.com/brettbuddin/music-theory"
+	mt "github.com/brettbuddin/musictheory"
 )
 
 func main() {
