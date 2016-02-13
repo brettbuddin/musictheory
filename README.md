@@ -1,4 +1,4 @@
-# mt (music theory)
+# Music Theory
 
 [![Build Status](https://travis-ci.org/brettbuddin/mt.svg?branch=master)](https://travis-ci.org/brettbuddin/mt)
 [![GoDoc](https://godoc.org/github.com/brettbuddin/mt?status.svg)](https://godoc.org/github.com/brettbuddin/mt)
@@ -11,7 +11,7 @@ Explorations in music theory.
 package main
 
 import (
-	"github.com/brettbuddin/mt"
+	mt "github.com/brettbuddin/music-theory"
 )
 
 func main() {
