@@ -1,6 +1,7 @@
 package musictheory
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -52,26 +53,39 @@ func (d Duration) Time(unit Duration, bpm int) time.Duration {
 }
 
 func (d Duration) String() string {
+	var value string
 	switch d.Value {
 	case 1:
-		return "whole"
+		value = "whole"
 	case 2:
-		return "half"
+		value = "half"
 	case 4:
-		return "quarter"
+		value = "quarter"
 	case 8:
-		return "eighth"
+		value = "eighth"
 	case 16:
-		return "sixteenth"
+		value = "sixteenth"
 	case 32:
-		return "thirty-second"
+		value = "thirty-second"
 	case 64:
-		return "sixty-fourth"
+		value = "sixty-fourth"
 	case 128:
-		return "hundred-twenty-eighth"
+		value = "hundred-twenty-eighth"
 	default:
-		return "unknown"
+		value = "unknown"
 	}
+
+	var dots string
+	if d.Dots > 0 {
+		dots = fmt.Sprintf("dotted(%d) ", d.Dots)
+	}
+
+	var triplet string
+	if d.Triplet {
+		triplet = "triplet "
+	}
+
+	return fmt.Sprintf("%s%s%s", dots, triplet, value)
 }
 
 // Note is a pitch with a duration
@@ -88,4 +102,8 @@ func NewNote(pitch Pitch, duration Duration) Note {
 // Transpose transposes a note by a given interval
 func (n Note) Transpose(i Interval) Transposer {
 	return Note{n.Pitch.Transpose(i).(Pitch), n.Duration}
+}
+
+func (n Note) String() string {
+	return fmt.Sprintf("%s %s", n.Pitch.String(), n.Duration.String())
 }
