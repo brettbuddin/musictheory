@@ -103,6 +103,7 @@ func TestTranspose(test *testing.T) {
 		{Interval{0, 6, 11}, Diminished(5).Negate(), Interval{0, 2, 5}},
 		{Interval{0, 6, 11}, Diminished(-5), Interval{0, 2, 5}},
 		{Interval{0, 6, 11}, Major(-12), Interval{-1, 2, 4}},
+		{Interval{-1, 2, 4}, Major(-12).Negate(), Interval{0, 6, 11}},
 		{Interval{-1, 2, 4}, Perfect(12), Interval{0, 6, 11}},
 	}
 
