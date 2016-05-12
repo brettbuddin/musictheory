@@ -1,6 +1,9 @@
 package musictheory
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 // Quality types
 const (
@@ -55,10 +58,16 @@ func Octave(step int) Interval {
 }
 
 func qualityInterval(step int, quality Quality) Interval {
-	diatonic := normalizeDiatonic(step - 1)
+	absStep := int(math.Abs(float64(step)))
+	diatonic := normalizeDiatonic(absStep - 1)
 	diff := qualityDiff(quality, canBePerfect(diatonic))
-	octaves := diatonicOctaves(step - 1)
-	return NewInterval(step, octaves, diff)
+	octaves := diatonicOctaves(absStep - 1)
+
+	i := NewInterval(absStep, octaves, diff)
+	if step > 0 {
+		return i
+	}
+	return i.Negate()
 }
 
 // NewInterval builds a new Interval

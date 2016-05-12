@@ -76,7 +76,7 @@ func TestIntervalQuality(test *testing.T) {
 		{Perfect(5), Quality{PerfectType, 0}},
 		{Major(2), Quality{MajorType, 0}},
 		{Minor(3), Quality{MinorType, 0}},
-		{Major(-12), Quality{MinorType, 0}},
+		{Major(-12), Quality{PerfectType, 0}},
 		{Augmented(1), Quality{AugmentedType, 1}},
 		{DoublyAugmented(1), Quality{AugmentedType, 2}},
 		{DoublyDiminished(1), Quality{DiminishedType, 2}},
@@ -101,6 +101,9 @@ func TestTranspose(test *testing.T) {
 		{Interval{0, 1, 2}, Augmented(4), Interval{0, 4, 8}},
 		{Interval{0, 6, 11}, Minor(3), Interval{1, 1, 2}},
 		{Interval{0, 6, 11}, Diminished(5).Negate(), Interval{0, 2, 5}},
+		{Interval{0, 6, 11}, Diminished(-5), Interval{0, 2, 5}},
+		{Interval{0, 6, 11}, Major(-12), Interval{-1, 2, 4}},
+		{Interval{-1, 2, 4}, Perfect(12), Interval{0, 6, 11}},
 	}
 
 	for i, t := range data {
