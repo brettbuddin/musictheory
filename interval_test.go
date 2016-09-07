@@ -1,6 +1,7 @@
 package musictheory
 
 import (
+	"math"
 	"testing"
 )
 
@@ -132,6 +133,28 @@ func TestQualityInversion(test *testing.T) {
 	for i, t := range data {
 		actual := t.input.Invert()
 		if !actual.Eq(t.expected) {
+			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
+		}
+	}
+}
+
+func TestIntervalRatio(test *testing.T) {
+	data := []struct {
+		input    Interval
+		expected float64
+	}{
+		{Perfect(-5), math.Exp2(-7.0 / 12.0)},
+		{Perfect(5), math.Exp2(7.0 / 12.0)},
+		{Perfect(4), math.Exp2(5.0 / 12.0)},
+		{Major(3), math.Exp2(4.0 / 12.0)},
+		{Minor(3), math.Exp2(3.0 / 12.0)},
+		{Augmented(-4), math.Exp2(-6.0 / 12.0)},
+		{Diminished(5), math.Exp2(6.0 / 12.0)},
+	}
+
+	for i, t := range data {
+		actual := t.input.Ratio()
+		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
 		}
 	}

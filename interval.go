@@ -105,6 +105,11 @@ func (i Interval) Quality() Quality {
 	return quality
 }
 
+// Ratio returns the interval ratio
+func (i Interval) Ratio() float64 {
+	return math.Exp2(float64(i.Semitones()) / 12.0)
+}
+
 // Transpose returns a new Interval that has been transposed by the given Interval
 func (i Interval) Transpose(o Interval) Transposer {
 	diatonic := i.Diatonic + o.Diatonic

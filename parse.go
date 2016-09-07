@@ -6,7 +6,10 @@ import (
 	"strconv"
 )
 
-var notation = regexp.MustCompile("([ABCDEFG])(bb|b|#|x)?(\\d+)")
+var (
+	pitch    = regexp.MustCompile("([ABCDEFG])(bb|b|#|x)?(\\d+)")
+	interval = regexp.MustCompile("([-+])?([PAdMm])(\\d+)")
+)
 
 // MustParsePitch parses and returns a Pitch in scientific pitch notation or panics
 func MustParsePitch(str string) *Pitch {
@@ -19,7 +22,7 @@ func MustParsePitch(str string) *Pitch {
 
 // ParsePitch parses and returns a Pitch in scientific pitch notation
 func ParsePitch(str string) (*Pitch, error) {
-	matches := notation.FindStringSubmatch(str)
+	matches := pitch.FindStringSubmatch(str)
 	if len(matches) < 1 {
 		return nil, fmt.Errorf("no matches found")
 	}
@@ -61,4 +64,35 @@ func modifierNameOffset(name string) (int, error) {
 	}
 
 	return 0, fmt.Errorf("unknown modifier: %s", name)
+}
+
+func ParseInterval(str string) (*Interval, error) {
+	matches := interval.FindStringSubmatch(str)
+	if len(matches) < 1 {
+		return nil, fmt.Errorf("no matches found")
+	}
+
+	quality := matches[2]
+	polarity := "+"
+	if len(matches[1]) > 0 {
+		polarity = matches[1]
+	}
+	step, _ := strconv.Atoi(polarity + matches[3])
+
+	var interval Interval
+	switch quality {
+	case "P":
+		interval = Perfect(step)
+	case "A":
+		interval = Augmented(step)
+	case "M":
+		interval = Major(step)
+	case "m":
+		interval = Minor(step)
+	case "d":
+		interval = Diminished(step)
+	default:
+		return nil, fmt.Errorf("invalid quality")
+	}
+	return &interval, nil
 }
