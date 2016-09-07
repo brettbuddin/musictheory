@@ -8,7 +8,7 @@ import (
 
 var (
 	pitch    = regexp.MustCompile("([ABCDEFG])(bb|b|#|x)?(\\d+)")
-	interval = regexp.MustCompile("([-+])?([PAdMm])(\\d+)")
+	interval = regexp.MustCompile("([-+])?([PAdMm]|perf|maj|min|aug|dim)(\\d+)")
 )
 
 // MustParsePitch parses and returns a Pitch in scientific pitch notation or panics
@@ -81,14 +81,24 @@ func ParseInterval(str string) (*Interval, error) {
 
 	var interval Interval
 	switch quality {
+	case "perf":
+		fallthrough
 	case "P":
 		interval = Perfect(step)
+	case "aug":
+		fallthrough
 	case "A":
 		interval = Augmented(step)
+	case "maj":
+		fallthrough
 	case "M":
 		interval = Major(step)
+	case "min":
+		fallthrough
 	case "m":
 		interval = Minor(step)
+	case "dim":
+		fallthrough
 	case "d":
 		interval = Diminished(step)
 	default:
