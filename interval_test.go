@@ -47,6 +47,7 @@ func TestIntervals(test *testing.T) {
 		{Diminished, 7, 0, 6, 9},
 		{Diminished, 8, 1, 0, -1},
 
+		{Minor, 2, 0, 1, 1},
 		{Minor, 3, 0, 2, 3},
 		{Minor, 5, 0, 4, 6},
 		{Minor, 7, 0, 6, 10},
@@ -94,22 +95,51 @@ func TestIntervalQuality(test *testing.T) {
 func TestTranspose(test *testing.T) {
 	data := []struct {
 		initial, interval, expected Interval
+		times                       int
 	}{
-		{Interval{0, 0, 0}, Major(2), Interval{0, 1, 2}},
-		{Interval{0, 0, 0}, Major(3), Interval{0, 2, 4}},
-		{Interval{0, 0, 0}, Minor(3), Interval{0, 2, 3}},
-		{Interval{0, 0, 0}, Augmented(1), Interval{0, 0, 1}},
-		{Interval{0, 1, 2}, Augmented(4), Interval{0, 4, 8}},
-		{Interval{0, 6, 11}, Minor(3), Interval{1, 1, 2}},
-		{Interval{0, 6, 11}, Diminished(5).Negate(), Interval{0, 2, 5}},
-		{Interval{0, 6, 11}, Diminished(-5), Interval{0, 2, 5}},
-		{Interval{0, 6, 11}, Major(-12), Interval{-1, 2, 4}},
-		{Interval{-1, 2, 4}, Major(-12).Negate(), Interval{0, 6, 11}},
-		{Interval{-1, 2, 4}, Perfect(12), Interval{0, 6, 11}},
+		// Sequential transpositions M2
+		{Interval{0, 0, 0}, Major(2), Interval{0, 1, 2}, 1},
+		{Interval{0, 0, 0}, Major(2), Interval{0, 2, 4}, 2},
+		{Interval{0, 0, 0}, Major(2), Interval{0, 3, 6}, 3},
+		{Interval{0, 0, 0}, Major(2), Interval{0, 4, 8}, 4},
+
+		// Sequential transpositions of m2
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 1, 1}, 1},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 1, 2}, 2},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 2, 3}, 3},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 2, 4}, 4},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 3, 5}, 5},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 4, 6}, 6},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 4, 7}, 7},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 5, 8}, 8},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 5, 9}, 9},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 6, 10}, 10},
+		{Interval{0, 0, 0}, Minor(2), Interval{0, 6, 11}, 11},
+		{Interval{0, 0, 0}, Minor(2), Interval{1, 0, 0}, 12},
+
+		// Sequential transpositions of M3
+		{Interval{0, 0, 0}, Minor(3), Interval{0, 2, 3}, 1},
+		{Interval{0, 0, 0}, Minor(3), Interval{0, 4, 6}, 2},
+		{Interval{0, 0, 0}, Minor(3), Interval{0, 6, 9}, 3},
+		{Interval{0, 0, 0}, Minor(3), Interval{1, 1, 0}, 4},
+
+		{Interval{0, 0, 0}, Major(3), Interval{0, 2, 4}, 1},
+		{Interval{0, 0, 0}, Augmented(1), Interval{0, 0, 1}, 1},
+		{Interval{0, 1, 2}, Augmented(4), Interval{0, 4, 8}, 1},
+		{Interval{0, 6, 11}, Minor(3), Interval{1, 1, 2}, 1},
+		{Interval{0, 6, 11}, Diminished(5).Negate(), Interval{0, 2, 5}, 1},
+		{Interval{0, 6, 11}, Diminished(-5), Interval{0, 2, 5}, 1},
+		{Interval{0, 6, 11}, Major(-12), Interval{-1, 2, 4}, 1},
+		{Interval{-1, 2, 4}, Major(-12).Negate(), Interval{0, 6, 11}, 1},
+		{Interval{-1, 2, 4}, Perfect(12), Interval{0, 6, 11}, 1},
 	}
 
 	for i, t := range data {
-		actual := t.initial.Transpose(t.interval).(Interval)
+		actual := t.initial
+		for j := 0; j < t.times; j++ {
+			actual = actual.Transpose(t.interval).(Interval)
+		}
+
 		if actual.Octaves != t.expected.Octaves ||
 			actual.Diatonic != t.expected.Diatonic ||
 			actual.Chromatic != t.expected.Chromatic {
