@@ -61,10 +61,13 @@ func (s Scale) Transpose(i Interval) Transposer {
 }
 
 // NewScale returns a Scale built using a set of intervals
-func NewScale(root Transposer, intervals []Interval) Scale {
+func NewScale(root Transposer, intervals []Interval, octaves int) Scale {
 	scale := Scale{}
-	for _, i := range intervals {
-		scale = append(scale, root.Transpose(i))
+	for i := 0; i < octaves; i++ {
+		for _, v := range intervals {
+			scale = append(scale, root.Transpose(v))
+		}
+		root = root.Transpose(Octave(1))
 	}
 	return scale
 }
