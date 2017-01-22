@@ -2,16 +2,18 @@ package musictheory
 
 // Scales
 var (
-	ChromaticIntervals  []Interval
-	MajorIntervals      []Interval
-	MinorIntervals      []Interval
-	IonianIntervals     []Interval
-	DorianIntervals     []Interval
-	PhrygianIntervals   []Interval
-	AeolianIntervals    []Interval
-	LydianIntervals     []Interval
-	MixolydianIntervals []Interval
-	LocrianIntervals    []Interval
+	ChromaticIntervals       []Interval
+	MajorIntervals           []Interval
+	MinorIntervals           []Interval
+	MajorPentatonicIntervals []Interval
+	MinorPentatonicIntervals []Interval
+	IonianIntervals          []Interval
+	DorianIntervals          []Interval
+	PhrygianIntervals        []Interval
+	AeolianIntervals         []Interval
+	LydianIntervals          []Interval
+	MixolydianIntervals      []Interval
+	LocrianIntervals         []Interval
 )
 
 func init() {
@@ -44,6 +46,9 @@ func init() {
 
 	AeolianIntervals = []Interval{P1, M2, m3, P4, P5, m6, m7}
 	MinorIntervals = AeolianIntervals
+
+	MajorPentatonicIntervals = []Interval{P1, M2, M3, P5, M6}
+	MinorPentatonicIntervals = []Interval{P1, m3, P4, P5, m7}
 
 	LocrianIntervals = []Interval{P1, m2, m3, P4, d5, m6, m7}
 }

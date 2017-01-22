@@ -26,6 +26,8 @@ func init() {
 		{NewPitch(C, Natural, 4), LocrianIntervals, 1, []string{"C4", "Db4", "Eb4", "F4", "Gb4", "Ab4", "Bb4"}},
 		{NewPitch(C, Natural, 4), MajorIntervals, 2, []string{"C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5"}},
 		{NewPitch(C, Natural, 4), MinorIntervals, 1, []string{"C4", "D4", "Eb4", "F4", "G4", "Ab4", "Bb4"}},
+		{NewPitch(E, Natural, 4), MinorPentatonicIntervals, 1, []string{"E4", "G4", "A4", "B4", "D5"}},
+		{NewPitch(E, Flat, 4), MajorPentatonicIntervals, 1, []string{"Eb4", "F4", "G4", "Bb4", "C5"}},
 	}
 }
 
