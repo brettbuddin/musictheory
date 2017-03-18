@@ -11,7 +11,7 @@ Explorations in music theory.
 package main
 
 import (
-	mt "github.com/brettbuddin/musictheory"
+	mt "buddin.us/musictheory"
 )
 
 func main() {
@@ -40,9 +40,3 @@ func main() {
 ```
 
 楽しみます！
-
-## TODO
-
-- Chords and inversions
-- ...
-- Write a tool or two that uses this stuff...

@@ -1,6 +1,6 @@
 package intervals
 
-import mt "github.com/brettbuddin/musictheory"
+import mt "buddin.us/musictheory"
 
 var (
 	MajorTriad,

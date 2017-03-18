@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	mt "github.com/brettbuddin/musictheory"
-	"github.com/brettbuddin/musictheory/intervals"
+	mt "buddin.us/musictheory"
+	"buddin.us/musictheory/intervals"
 )
 
 type scaleTest struct {
