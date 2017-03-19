@@ -57,6 +57,11 @@ func Octave(step int) Interval {
 	return Interval{step, 0, 0}
 }
 
+// Semitones is an interval using direct semitones
+func Semitones(step int) Interval {
+	return Interval{chromaticOctaves(step), chromaticToDiatonic(step), step}
+}
+
 func qualityInterval(step int, quality Quality) Interval {
 	absStep := int(math.Abs(float64(step)))
 	diatonic := normalizeDiatonic(absStep - 1)
@@ -219,6 +224,22 @@ func diatonicToChromatic(interval int) int {
 }
 
 var diatonicToChromaticLookup = []int{0, 2, 4, 5, 7, 9, 11}
+
+func chromaticToDiatonic(v int) int {
+	mag := 1
+	if v < 0 {
+		mag = -1
+		v = -v
+	}
+	v = normalizeChromatic(v)
+
+	for i, c := range diatonicToChromaticLookup {
+		if v == c || v < c {
+			return i * mag
+		}
+	}
+	return 6 * mag
+}
 
 func qualityDiff(q Quality, perfect bool) int {
 	if q.Type == PerfectType || q.Type == MajorType {

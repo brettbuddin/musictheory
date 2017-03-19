@@ -14,6 +14,10 @@ func diatonicOctaves(v int) int {
 	return v / 7
 }
 
+func chromaticOctaves(v int) int {
+	return v / 12
+}
+
 func inverseChromatic(v int) int {
 	return 12 - v
 }

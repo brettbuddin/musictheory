@@ -141,3 +141,28 @@ func TestMIDI(test *testing.T) {
 func closeEqualFloat64(actual, expected float64) bool {
 	return math.Abs(actual-expected) >= tolerance
 }
+
+func TestNearestPitch(test *testing.T) {
+	data := []struct {
+		input    float64
+		expected Pitch
+	}{
+		{74, NewPitch(D, Natural, 2)},
+		{190, NewPitch(F, Sharp, 3)},
+		{400, NewPitch(G, Natural, 4)},
+		{350, NewPitch(F, Natural, 4)},
+		{concertFrequency, NewPitch(A, Natural, 4)},
+		{800, NewPitch(G, Natural, 5)},
+		{32000, NewPitch(B, Natural, 10)},
+	}
+
+	for _, t := range data {
+		actual := NearestPitch(t.input)
+		if !actual.Eq(t.expected) {
+			test.Errorf("input=%f output=%v, expected=%v",
+				t.input,
+				actual,
+				t.expected)
+		}
+	}
+}

@@ -100,3 +100,17 @@ func (p Pitch) MIDI() int {
 func modifierName(i int) string {
 	return modifierNames[int(mod(float64(i), float64(len(modifierNames))))]
 }
+
+// NearestPitch returns the closest pitch to an arbitrary frequency
+func NearestPitch(f float64) Pitch {
+	x := 12 * (math.Log2(f / concertFrequency))
+	if x < 0 {
+		x = math.Ceil(x - 0.5)
+	} else {
+		x = math.Floor(x + 0.5)
+	}
+	if x == 0 {
+		return middleA
+	}
+	return middleA.Transpose(Semitones(int(x))).(Pitch)
+}
