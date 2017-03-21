@@ -24,6 +24,8 @@ Double flats (bb) and double sharps (x) are also valid.
 
 Intervals:
 
+Intervals are expressed as a quality + step.
+
 Name	    Values
 ----------  -------
 Perfect     P, perf
