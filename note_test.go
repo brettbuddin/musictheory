@@ -23,7 +23,7 @@ func TestNoteDuration(test *testing.T) {
 	}
 
 	for i, t := range data {
-		actual := NewNote(NewPitch(C, 0, Natural), t.duration).Time(t.unit, t.bpm)
+		actual := NewNote(NewPitch(C, Natural, 0), t.duration).Time(t.unit, t.bpm)
 
 		if actual != t.expected {
 			test.Errorf("index=%d actual=%s expected=%s", i, actual, t.expected)
