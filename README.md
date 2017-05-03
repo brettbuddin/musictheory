@@ -11,8 +11,8 @@ Explorations in music theory.
 package main
 
 import (
-	mt "buddin.us/musictheory"
-	"buddin.us/musictheory/intervals"
+    mt "buddin.us/musictheory"
+    "buddin.us/musictheory/intervals"
 )
 
 func main() {
