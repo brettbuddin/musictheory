@@ -152,7 +152,7 @@ func (i Interval) Negate() Interval {
 
 // Eq determines if another interval is the same
 func (i Interval) Eq(o Interval) bool {
-	return i.Octaves == o.Octaves && i.Diatonic == o.Diatonic && i.Chromatic == o.Chromatic
+	return i.Semitones() == o.Semitones()
 }
 
 // QualityType represents the type a Quality can take
