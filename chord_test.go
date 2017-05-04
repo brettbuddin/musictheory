@@ -23,14 +23,24 @@ func TestChordInversion(test *testing.T) {
 		expected  Chord
 	}{
 		{NewPitch(C, Natural, 0), majorTriad, 1, Chord{
-			NewPitch(C, Natural, 1),
 			NewPitch(E, Natural, 0),
 			NewPitch(G, Natural, 0),
+			NewPitch(C, Natural, 1),
 		}},
 		{NewPitch(C, Natural, 0), majorTriad, 2, Chord{
+			NewPitch(G, Natural, 0),
 			NewPitch(C, Natural, 1),
 			NewPitch(E, Natural, 1),
-			NewPitch(G, Natural, 0),
+		}},
+		{NewPitch(C, Natural, 0), majorTriad, 3, Chord{
+			NewPitch(C, Natural, 1),
+			NewPitch(E, Natural, 1),
+			NewPitch(G, Natural, 1),
+		}},
+		{NewPitch(C, Natural, 0), majorTriad, 4, Chord{
+			NewPitch(E, Natural, 1),
+			NewPitch(G, Natural, 1),
+			NewPitch(C, Natural, 2),
 		}},
 		{NewPitch(C, Natural, 0), majorTriad, 3, Chord{
 			NewPitch(C, Natural, 1),
@@ -38,15 +48,15 @@ func TestChordInversion(test *testing.T) {
 			NewPitch(G, Natural, 1),
 		}},
 		{NewPitch(C, Sharp, 0), minorTriad, 2, Chord{
+			NewPitch(G, Sharp, 0),
 			NewPitch(C, Sharp, 1),
 			NewPitch(E, Natural, 1),
-			NewPitch(G, Sharp, 0),
 		}},
 		{NewPitch(E, Flat, 2), diminishedMajorSeventh, 2, Chord{
-			NewPitch(E, Flat, 3),
-			NewPitch(G, Flat, 3),
 			NewPitch(A, Natural, 2),
 			NewPitch(D, Natural, 3),
+			NewPitch(E, Flat, 3),
+			NewPitch(G, Flat, 3),
 		}},
 	}
 

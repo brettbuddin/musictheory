@@ -23,13 +23,18 @@ func (c Chord) Transpose(i Interval) Transposer {
 
 // Invert performs a chord inversion of some degree
 func (c Chord) Invert(degree int) Chord {
+	octaves := degree / len(c)
+	pos := degree % len(c)
+
 	chord := Chord{}
-	octave := Octave(1)
-	for i, p := range c {
-		if i < degree {
-			p = p.Transpose(octave).(Pitch)
+	for _, p := range c[pos:] {
+		if octaves > 0 {
+			p = p.Transpose(Octave(octaves)).(Pitch)
 		}
 		chord = append(chord, p)
+	}
+	for _, p := range c[:pos] {
+		chord = append(chord, p.Transpose(Octave(octaves+1)).(Pitch))
 	}
 	return chord
 }
