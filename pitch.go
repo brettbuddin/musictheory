@@ -97,6 +97,10 @@ func (p Pitch) MIDI() int {
 	return p.Semitones() + 24
 }
 
+func (p Pitch) String() string {
+	return fmt.Sprintf("%s %s", p.Name(AscNames), p.Interval)
+}
+
 func modifierName(i int) string {
 	return modifierNames[int(mod(float64(i), float64(len(modifierNames))))]
 }
