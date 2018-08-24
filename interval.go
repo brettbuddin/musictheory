@@ -64,10 +64,12 @@ func Semitones(step int) Interval {
 }
 
 func qualityInterval(step int, quality Quality) Interval {
-	absStep := int(math.Abs(float64(step)))
-	diatonic := normalizeDiatonic(absStep - 1)
-	diff := qualityDiff(quality, canBePerfect(diatonic))
-	octaves := diatonicOctaves(absStep - 1)
+	var (
+		absStep  = int(math.Abs(float64(step)))
+		diatonic = normalizeDiatonic(absStep - 1)
+		diff     = qualityDiff(quality, canBePerfect(diatonic))
+		octaves  = diatonicOctaves(absStep - 1)
+	)
 
 	i := NewInterval(absStep, octaves, diff)
 	if step > 0 {

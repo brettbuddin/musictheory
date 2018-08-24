@@ -62,9 +62,11 @@ type ModifierStrategy func(int) int
 // Name returns the name of the pitch using a particular name strategy (either AscNames or DescNames). The result is
 // in scientific pitch notation format.
 func (p Pitch) Name(strategy ModifierStrategy) string {
-	semitones := normalizeChromaticPositive(p.Chromatic)
-	nameIndex := strategy(semitones)
-	delta := semitones - diatonicToChromatic(nameIndex)
+	var (
+		semitones = normalizeChromaticPositive(p.Chromatic)
+		nameIndex = strategy(semitones)
+		delta     = semitones - diatonicToChromatic(nameIndex)
+	)
 
 	if delta == 0 {
 		return fmt.Sprintf("%s%d", pitchNames[nameIndex], p.Octaves)
