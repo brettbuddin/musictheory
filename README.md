@@ -1,6 +1,5 @@
 # Music Theory
 
-[![Build Status](https://travis-ci.org/brettbuddin/musictheory.svg?branch=master)](https://travis-ci.org/brettbuddin/musictheory)
 [![GoDoc](https://godoc.org/github.com/brettbuddin/musictheory?status.svg)](https://godoc.org/github.com/brettbuddin/musictheory)
 
 Explorations in music theory.
