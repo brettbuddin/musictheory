@@ -6,6 +6,10 @@ Explorations in music theory.
 
 ## Usage
 
+```
+go get github.com/brettbuddin/musictheory@latest
+```
+
 ```go
 package main
 
@@ -47,5 +51,3 @@ func main() {
     note.Time(mt.D4, 120)            // 125ms (quarter note getting the beat at 120 BPM)
 }
 ```
-
-楽しみます！
