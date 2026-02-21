@@ -32,8 +32,7 @@ var (
 	pitchNames     = [7]string{"C", "D", "E", "F", "G", "A", "B"}
 	namesForFlats  = [12]int{0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6}
 	namesForSharps = [12]int{0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6}
-	semitone       = math.Pow(2, 1.0/12.0)
-	middleA        = NewPitch(A, Natural, 4)
+	middleA = NewPitch(A, Natural, 4)
 )
 
 // DescNames maps an modifier to a correspending diatonic as flats
@@ -86,7 +85,7 @@ func (p Pitch) Eq(o Pitch) bool {
 
 // Freq returns the absolute frequency of a pitch in Hz
 func (p Pitch) Freq() float64 {
-	return concertFrequency * math.Pow(semitone, float64(p.Semitones()-middleA.Semitones()))
+	return concertFrequency * math.Exp2(float64(p.Semitones()-middleA.Semitones())/12.0)
 }
 
 // MIDI returns the MIDI note number of the pitch
@@ -99,19 +98,15 @@ func (p Pitch) String() string {
 }
 
 func modifierName(i int) string {
-	return modifierNames[int(posMod(float64(i), float64(len(modifierNames))))]
+	m := len(modifierNames)
+	return modifierNames[((i%m)+m)%m]
 }
 
 // NearestPitch returns the closest pitch to an arbitrary frequency
 func NearestPitch(f float64) Pitch {
-	x := 12 * (math.Log2(f / concertFrequency))
-	if x < 0 {
-		x = math.Ceil(x - 0.5)
-	} else {
-		x = math.Floor(x + 0.5)
-	}
-	if x == 0 {
+	semitones := int(math.Round(12 * math.Log2(f/concertFrequency)))
+	if semitones == 0 {
 		return middleA
 	}
-	return middleA.Transpose(Semitones(int(x)))
+	return middleA.Transpose(Semitones(semitones))
 }

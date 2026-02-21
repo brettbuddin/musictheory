@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-const tolerance = 0.000001
+const epsilon = 0.000001
 
 func TestSharpPitchNames(test *testing.T) {
 	data := []struct {
@@ -107,7 +107,7 @@ func TestFrequency(test *testing.T) {
 	for _, t := range data {
 		actual := t.input.Freq()
 
-		if closeEqualFloat64(actual, t.expected) {
+		if math.Abs(actual-t.expected) > epsilon {
 			test.Errorf("input=%s output=%f, expected=%f",
 				t.input,
 				actual,
@@ -136,10 +136,6 @@ func TestMIDI(test *testing.T) {
 				t.expected)
 		}
 	}
-}
-
-func closeEqualFloat64(actual, expected float64) bool {
-	return math.Abs(actual-expected) >= tolerance
 }
 
 func TestNearestPitch(test *testing.T) {

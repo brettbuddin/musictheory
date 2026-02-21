@@ -1,31 +1,36 @@
 package musictheory
 
+import "slices"
+
 // Scale is a series of Pitches
 type Scale []Pitch
 
 // Transpose transposes a scale by the specified Interval
 func (s Scale) Transpose(i Interval) Scale {
-	scale := Scale{}
-	for _, transposer := range s {
-		scale = append(scale, transposer.Transpose(i))
+	scale := make(Scale, len(s))
+	for j, p := range s {
+		scale[j] = p.Transpose(i)
 	}
 	return scale
 }
 
 // NewScale returns a Scale built using a set of intervals
 func NewScale(root Pitch, intervals []Interval, octaves int) Scale {
-	var (
-		scale        = Scale{}
-		originalRoot = root
-		descending   = (octaves < 0)
-	)
+	descending := octaves < 0
+	n := octaves
+	if n < 0 {
+		n = -n
+	}
+
+	scale := make(Scale, 0, n*len(intervals))
+	originalRoot := root
 
 	// Begin at the base of our octave shift
 	if descending {
 		root = root.Transpose(Octave(octaves))
 	}
 
-	for i := 0; i < abs(octaves); i++ {
+	for i := 0; i < n; i++ {
 		for j, v := range intervals {
 			// Ignore the tonic which will become the *last* item in the slice
 			// once reversed. This is to maintain consistency with ascending
@@ -43,18 +48,8 @@ func NewScale(root Pitch, intervals []Interval, octaves int) Scale {
 	// scale.
 	if descending {
 		scale = append(scale, originalRoot)
-		for i := len(scale)/2 - 1; i >= 0; i-- {
-			opp := len(scale) - 1 - i
-			scale[i], scale[opp] = scale[opp], scale[i]
-		}
+		slices.Reverse(scale)
 	}
 
 	return scale
-}
-
-func abs(v int) int {
-	if v < 0 {
-		return -v
-	}
-	return v
 }
