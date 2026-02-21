@@ -121,7 +121,7 @@ func (i Interval) Ratio() float64 {
 func (i Interval) Transpose(o Interval) Interval {
 	var diatonic int
 
-	// TODO: Accomodate weird behavior of sequential minor second transpositions. We don't need to advance the diatonic
+	// TODO: Accommodate weird behavior of sequential minor second transpositions. We don't need to advance the diatonic
 	// every transposition. We're currently modeling things as integers, but maybe we need to model as floats and
 	// accumulate over time; whole numbers trigger a move.
 	if o.Diatonic == o.Chromatic {
@@ -243,7 +243,7 @@ func diatonicToChromatic(interval int) int {
 	return diatonicToChromaticLookup[interval]
 }
 
-var diatonicToChromaticLookup = []int{0, 2, 4, 5, 7, 9, 11}
+var diatonicToChromaticLookup = [7]int{0, 2, 4, 5, 7, 9, 11}
 
 func chromaticToDiatonic(v int) int {
 	mag := 1

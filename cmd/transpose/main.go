@@ -61,7 +61,7 @@ func main() {
 	}
 
 	if *helpFlag || *pitchFlag == "" || *intervalFlag == "" {
-		fmt.Println(help)
+		fmt.Print(help)
 		flag.PrintDefaults()
 		return
 	}

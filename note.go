@@ -15,7 +15,7 @@ func Triplet(d Duration) Duration {
 	return Duration{d.Value, d.Dots, true}
 }
 
-const ns = 1000000000
+const ns = float64(time.Second)
 
 // Durations
 var (

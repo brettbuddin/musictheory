@@ -35,12 +35,12 @@ var (
 	middleA = NewPitch(A, Natural, 4)
 )
 
-// DescNames maps an modifier to a correspending diatonic as flats
+// DescNames maps a modifier to a corresponding diatonic as flats
 func DescNames(i int) int {
 	return namesForFlats[normalizeChromatic(i)]
 }
 
-// AscNames maps an modifier to a correspending diatonic as sharps
+// AscNames maps a modifier to a corresponding diatonic as sharps
 func AscNames(i int) int {
 	return namesForSharps[normalizeChromatic(i)]
 }

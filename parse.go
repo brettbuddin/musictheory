@@ -67,6 +67,7 @@ func modifierNameOffset(name string) (int, error) {
 	return 0, fmt.Errorf("unknown modifier: %s", name)
 }
 
+// ParseInterval parses and returns an Interval from a string representation (e.g. "P5", "m3", "-aug4")
 func ParseInterval(str string) (Interval, error) {
 	matches := interval.FindStringSubmatch(str)
 	if len(matches) < 1 {
@@ -82,25 +83,15 @@ func ParseInterval(str string) (Interval, error) {
 
 	var interval Interval
 	switch quality {
-	case "perf":
-		fallthrough
-	case "P":
+	case "perf", "P":
 		interval = Perfect(step)
-	case "aug":
-		fallthrough
-	case "A":
+	case "aug", "A":
 		interval = Augmented(step)
-	case "maj":
-		fallthrough
-	case "M":
+	case "maj", "M":
 		interval = Major(step)
-	case "min":
-		fallthrough
-	case "m":
+	case "min", "m":
 		interval = Minor(step)
-	case "dim":
-		fallthrough
-	case "d":
+	case "dim", "d":
 		interval = Diminished(step)
 	default:
 		return Interval{}, fmt.Errorf("invalid quality")
