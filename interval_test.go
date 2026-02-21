@@ -141,7 +141,7 @@ func TestTranspose(test *testing.T) {
 
 	for i, t := range data {
 		actual := t.initial
-		for j := 0; j < t.times; j++ {
+		for range t.times {
 			actual = actual.Transpose(t.interval)
 		}
 

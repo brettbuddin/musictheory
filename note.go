@@ -41,7 +41,7 @@ type Duration struct {
 func (d Duration) Time(unit Duration, bpm int) time.Duration {
 	val := (60.0 / float64(bpm)) / (float64(d.Value) / 4.0) / (float64(unit.Value) / 4.0)
 
-	for i := 0; i < d.Dots; i++ {
+	for range d.Dots {
 		val += val / 2.0
 	}
 
