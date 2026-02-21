@@ -7,12 +7,12 @@ import (
 
 // Dotted makes a dotted duration
 func Dotted(d Duration, dots int) Duration {
-	return Duration{d.Value, dots, false}
+	return Duration{d.Value, dots, d.Triplet}
 }
 
 // Triplet makes a triplet duration
 func Triplet(d Duration) Duration {
-	return Duration{d.Value, 0, true}
+	return Duration{d.Value, d.Dots, true}
 }
 
 const ns = 1000000000
