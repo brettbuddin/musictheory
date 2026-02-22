@@ -121,14 +121,34 @@ func (i Interval) Ratio() float64 {
 func (i Interval) Transpose(o Interval) Interval {
 	var diatonic int
 
-	// TODO: Accommodate weird behavior of sequential minor second transpositions. We don't need to advance the diatonic
-	// every transposition. We're currently modeling things as integers, but maybe we need to model as floats and
-	// accumulate over time; whole numbers trigger a move.
-	if o.Diatonic == o.Chromatic {
-		if diatonicToChromatic(i.Diatonic) == i.Chromatic {
+	// When the transposing interval's diatonic step equals its chromatic
+	// step (notably the minor second: Diatonic=1, Chromatic=1), naive
+	// addition of diatonic components causes the diatonic counter to
+	// advance at the same rate as the chromatic counter. However, the
+	// diatonic scale has only 7 positions per 12 chromatic semitones, so
+	// this 1:1 advancement is too fast. We exhaust the diatonic space
+	// well before the chromatic space wraps.
+	//
+	// Ascending: Advance diatonic on naturals, hold on accidentals.
+	// Descending: Hold diatonic on naturals with a whole step below
+	// (B, A, G, E, D), advance on accidentals and on naturals with a
+	// half step below (C, F; the E-F and B-C boundaries).
+	//
+	// A general solution is not feasible because the Transpose method is
+	// stateless: it cannot distinguish between diatonic drift (stacked
+	// minor seconds) and legitimate accidental accumulation (stacked
+	// minor thirds producing diminished intervals like Bbb).
+	if o.Diatonic > 0 && o.Diatonic == o.Chromatic {
+		if isNaturalDiatonic(i.Diatonic, i.Chromatic) {
 			diatonic = i.Diatonic + o.Diatonic
 		} else {
 			diatonic = i.Diatonic
+		}
+	} else if o.Octaves < 0 && inverseDiatonic(o.Diatonic) == inverseChromatic(o.Chromatic) && inverseDiatonic(o.Diatonic) > 0 {
+		if isNaturalDiatonic(i.Diatonic, i.Chromatic) && !isDiatonicSemitoneDown(i.Diatonic) {
+			diatonic = i.Diatonic + o.Diatonic + 1
+		} else {
+			diatonic = i.Diatonic + o.Diatonic
 		}
 	} else {
 		diatonic = i.Diatonic + o.Diatonic
@@ -244,6 +264,22 @@ func diatonicToChromatic(interval int) int {
 }
 
 var diatonicToChromaticLookup = [7]int{0, 2, 4, 5, 7, 9, 11}
+
+// isNaturalDiatonic reports whether the diatonic and chromatic values
+// correspond to a natural (unmodified) diatonic scale degree -- that is,
+// the chromatic value matches the expected chromatic value for the diatonic
+// position with no sharps or flats applied.
+func isNaturalDiatonic(diatonic, chromatic int) bool {
+	return diatonicToChromatic(diatonic) == chromatic
+}
+
+// isDiatonicSemitoneDown reports whether the diatonic scale has a semitone
+// between this position and the one below it. This is true for C (the B-C
+// boundary) and F (the E-F boundary).
+func isDiatonicSemitoneDown(diatonic int) bool {
+	prev := (diatonic + 6) % 7
+	return (diatonicToChromatic(diatonic)-diatonicToChromatic(prev)+12)%12 == 1
+}
 
 func chromaticToDiatonic(v int) int {
 	mag := 1

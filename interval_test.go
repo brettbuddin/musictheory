@@ -129,7 +129,25 @@ func TestTranspose(test *testing.T) {
 		{Interval{0, 0, 0}, Minor(3), Interval{1, 1, 0}, 4},
 
 		{Interval{0, 0, 0}, Major(3), Interval{0, 2, 4}, 1},
+
+		// Sequential transpositions of -m2
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 6, 11}, 1},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 6, 10}, 2},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 5, 9}, 3},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 5, 8}, 4},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 4, 7}, 5},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 4, 6}, 6},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 3, 5}, 7},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 2, 4}, 8},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 2, 3}, 9},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 1, 2}, 10},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 1, 1}, 11},
+		{Interval{0, 0, 0}, Minor(-2), Interval{-1, 0, 0}, 12},
+
+		// Sequential transpositions of Aug1
 		{Interval{0, 0, 0}, Augmented(1), Interval{0, 0, 1}, 1},
+		{Interval{0, 0, 0}, Augmented(1), Interval{0, 0, 2}, 2},
+		{Interval{0, 0, 0}, Augmented(1), Interval{0, 0, 3}, 3},
 		{Interval{0, 1, 2}, Augmented(4), Interval{0, 4, 8}, 1},
 		{Interval{0, 6, 11}, Minor(3), Interval{1, 1, 2}, 1},
 		{Interval{0, 6, 11}, Diminished(5).Negate(), Interval{0, 2, 5}, 1},
